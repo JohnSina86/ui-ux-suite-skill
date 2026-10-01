@@ -6,7 +6,7 @@ One report for the whole job. Keep each section short, link to files, and skip a
 # UI/UX package: [project or screen]
 
 ## Summary
-- **Mode**: [Advise | Design | Full | Audit | Polish]
+- **Mode**: [Advise | Design | Full | Polish]
 - **Outcome**: [two sentences: what exists now, and the main open risk]
 - **Not run**: [stages skipped and why, or "none"]
 
@@ -28,7 +28,9 @@ One report for the whole job. Keep each section short, link to files, and skip a
 - **Fail and Warning rows**: [law, evidence, location]
 - **Not assessed**: [law, evidence needed]
 - **Scope note**: Usability heuristics only. This is not a WCAG conformance result.
-(The full ux-laws report is linked or attached, not retyped.)
+
+### Full audit (the complete ux-laws report: all 20 rows, counts, band, conformance notes, completeness checklist)
+[paste it here, in the ux-laws structure]
 
 ## 5. Fixes made
 [the Fix log, with the result of the one re-audit]
@@ -41,5 +43,6 @@ One report for the whole job. Keep each section short, link to files, and skip a
 
 ## Checks before sending
 - Every section either filled or marked skipped, and the **Not run** line complete.
+- If an audit ran, the full 20-row table is in the report and the summary numbers match it.
 - The numbers in the summary match the rows beneath them.
 - No claim of accessibility or WCAG conformance anywhere in the report.

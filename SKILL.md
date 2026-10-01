@@ -23,10 +23,9 @@ This skill is the **conductor**. It owns the order of work, the handoffs between
 | A style recommendation only | **Advise** | 1, 2, then stop |
 | A new UI or a restyle, with no checking asked | **Design** | 1, 2, 3, 6 |
 | A UI built and checked | **Full** | 1 to 6 |
-| An existing UI reviewed | **Audit** | 1 (short), 4, 6 |
-| An existing UI reviewed and fixed | **Polish** | 1 (short), 4, 5, one re-audit, 6 |
+| An existing UI reviewed and then fixed or restyled | **Polish** | 1 (short), 4, 5, one re-audit, 6 |
 
-If the request is a single task, route it directly. "Make this Neo-Brutalist" is `ui-styles` alone, and "audit the UX of this page" is `ux-laws` alone. Don't run the pipeline around a request that one skill covers.
+If the request is a single task, route it directly. "Make this Neo-Brutalist" is `ui-styles` alone, and "audit the UX of this page" is `ux-laws` alone. A review with no fixes asked for is `ux-laws` alone, so there is no Audit mode here. Don't run the pipeline around a request that one skill covers.
 
 ## 2. Pipeline
 Details, handoff blocks and gates are in [pipeline.md](references/pipeline.md). Each stage ends with a gate. Don't start the next stage until its gate passes.
@@ -61,11 +60,11 @@ Full rules and worked cases are in [conflict-rules.md](references/conflict-rules
 - Claim the result is accessible or WCAG-conformant. Say the audit's scope, and recommend an accessibility review for a conformance claim.
 
 ## 6. Definition of done
-- [ ] Mode stated, and every stage in it either completed or marked **Not run** with a reason.
-- [ ] Brief, style decision, build manifest, audit and fix log exist in the combined report.
-- [ ] The `ui-styles` pre-delivery checklist and the `ux-laws` audit-completeness checklist are both done.
-- [ ] Every colour pair in the delivered CSS is in the ledger or was recomputed, including any changed in stage 5.
-- [ ] The audit names its evidence source, lists **Not assessed** items with the evidence needed, and says if it was a self-audit.
+Check each item only for the stages in your mode. A stage you skipped needs a **Not run** line with its reason, not its artefact.
+- [ ] Mode stated, and every stage in it completed or marked **Not run** with a reason (an unavailable companion is a valid reason).
+- [ ] Each completed stage's block exists in the combined report: brief, style decision, build manifest, audit with its full 20-row table, fix log.
+- [ ] If stage 3 ran, the `ui-styles` pre-delivery checklist is done, and every colour pair in the delivered CSS is in the ledger or was recomputed, including any changed in stage 5.
+- [ ] If stage 4 ran, the `ux-laws` audit-completeness checklist is done, the evidence source is named, **Not assessed** rows list the evidence needed, and a self-audit is labelled as one.
 - [ ] Open risks and everything not run are listed.
 
 ## References

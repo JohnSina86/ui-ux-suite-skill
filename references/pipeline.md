@@ -42,7 +42,7 @@ The stage-by-stage procedure. Each stage has an input, the action, an output (a 
 - Match status: [indexed | no product row, indexed style fits | no verified match, unverified fallback]
 ```
 
-**Gate:** the block is written, and no style listed under Avoid for this product is proposed.
+**Gate:** the block is written. A style you *recommend* is never one listed under Avoid for this product. A style the user *named* stands: apply its `Requires` rule, and disclose any product-fit Avoid or risk note in the block.
 
 ## Stage 3: Build
 **Input:** the Style decision block.
@@ -96,10 +96,10 @@ Use the `ux-laws` interop table as a starting point for what to inspect, never a
 **Gate:** every Fail and Warning is fixed, or deferred with a reason. If rows remain after the one re-audit, they go into the report as open risks. Don't loop again.
 
 ## Stage 6: Report
-Assemble [report-template.md](report-template.md). Keep each section short. Link to the files, and don't paste whole stylesheets.
+Assemble [report-template.md](report-template.md). Keep each section short and link to the files, but include the **full `ux-laws` audit** (all 20 rows, the counts, the conformance notes) inside the report so the score can be checked from the document alone.
 
 ## Short modes
 - **Advise:** stages 1 and 2, then answer with the recommendation, reasons and risk. No CSS or files unless asked.
 - **Design:** stages 1, 2, 3 and 6. Note in the report that no audit was run, and offer one.
-- **Audit:** a short brief (surface type and the three tasks), stage 4 and the report. Fix nothing unless asked.
 - **Polish:** a short brief, stage 4, stage 5, one re-audit and the report. Don't restyle anything the findings don't touch.
+- **Review only:** not a mode here. A review with no fixes asked for goes to `ux-laws` alone.

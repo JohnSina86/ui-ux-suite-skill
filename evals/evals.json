@@ -17,14 +17,14 @@
     },
     {
       "id": 2,
-      "prompt": "Audit the UX of this checkout form and tell me what to fix, but don't restyle anything.\n\n<form class=\"checkout\"><h2>Pay</h2><input placeholder=\"Card number\"><input placeholder=\"Expiry\"><input placeholder=\"CVC\"><div class=\"promo\"><a href=\"#\">Have a promo code?</a></div><button class=\"x\">Pay now</button><button class=\"x secondary\">Cancel</button></form>",
-      "expected_output": "An Audit-mode run that uses the ux-laws report structure on the supplied markup, with source-code evidence only, and no restyling.",
+      "prompt": "Review the UX of this checkout form and fix what you find, but keep the look as it is.\n\n<form class=\"checkout\"><h2>Pay</h2><input placeholder=\"Card number\"><input placeholder=\"Expiry\"><input placeholder=\"CVC\"><div class=\"promo\"><a href=\"#\">Have a promo code?</a></div><button class=\"x\">Pay now</button><button class=\"x secondary\">Cancel</button></form>",
+      "expected_output": "A Polish-mode run: a short brief, a source-code audit with the full 20-row table, one batch of attribute-level fixes, one re-audit of the changed rows, and a combined report, with no restyling.",
       "files": [],
       "expectations": [
-        "Chooses Audit mode and does not run the style or build stages",
-        "Grades only what the markup shows, names source code as the evidence, and marks usage-based laws Not assessed with the evidence needed",
-        "Produces the ux-laws report structure with its scope note that this is not a WCAG conformance result",
-        "Lists concrete fixes for the Fail and Warning rows but does not change colours, fonts or visual style"
+        "Chooses Polish mode and does not run the style or build stages",
+        "Grades only what the markup shows, names source code as the evidence, and marks usage-based and rendering-dependent laws Not assessed with the evidence needed",
+        "Includes the full 20-row audit table with counts and the scope note that this is not a WCAG conformance result",
+        "Makes one fix batch (for example a type on the Cancel button, labels and autocomplete hints), re-audits the changed rows once, and does not change colours, fonts or visual style"
       ]
     },
     {

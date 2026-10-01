@@ -7,7 +7,7 @@ It is a conductor, not a merged copy. It owns the order of work, the handoffs an
 > **Status: v1.0.0, unreleased.** Not yet tagged or published. The install lines below pin the two companion skills to `v1.2.0` and expect this skill at `v1.0.0`.
 
 ## What you get
-- **Five modes**: Advise (style recommendation only), Design (restyle or build), Full (build and check), Audit (review only) and Polish (review, fix, re-check once).
+- **Four modes**: Advise (style recommendation only), Design (restyle or build), Full (build and check) and Polish (review, fix, re-check once). A review with no fixes asked for goes straight to `ux-laws`.
 - **Gates between stages**, so a style isn't chosen before the brief exists, and nothing is reported before its checklist is done.
 - **Conflict rules** for when the two skills disagree, with an order of precedence and worked cases.
 - **Honest evidence handling**: source-code-only audits say so, self-audits say so, and anything not run is listed.
