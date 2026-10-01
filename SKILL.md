@@ -4,7 +4,7 @@ description: >-
   Runs a complete UI/UX job in order: brief, style choice, build, evidence-based UX audit, fixes and one combined report, using the ui-styles and ux-laws skills. Use when the user wants a design built and checked, or a UX review followed by fixes. Not for a single task one of those skills covers alone, WCAG conformance audits or performance profiling.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # UI/UX Suite
@@ -52,7 +52,8 @@ Full rules and worked cases are in [conflict-rules.md](references/conflict-rules
 ## 4. Evidence and honesty
 - **Audit what you can observe.** Say which source the audit used: live page, source code, screenshot or description. If the UI was just generated and never rendered, the audit is on **source code only**, and every law that needs live behaviour is **Not assessed** with the evidence it would need.
 - **Say when it is a self-audit.** You built it and you graded it, so it is not independent. State that, and offer a fresh-session review for anything that matters. Label every row that rests on a static estimate as one, call the score **indicative**, and don't headline a perfect score. A re-audit after your own fixes checks the edits, not the page.
-- **Don't turn "I wrote the rule" into "it passes".** A contrast pair counts when it is in the `ui-styles` ledger or you recomputed it. A ledger row covers only the surface it names, so the same colour on another surface is a new pair to recompute, and the row's ratio must not be quoted for it.
+- **Don't turn "I wrote the rule" into "it passes".** A contrast pair counts when it is in the `ui-styles` ledger or you recomputed it. A ledger row covers only the surface it names, so the same colour on another surface is a new pair to recompute, and the row's ratio must not be quoted for it. When you compute a ratio, write both relative luminances beside it. A ratio with no luminances shown is a claim, not a recomputation.
+- **Check before you say "none".** Before writing "no remote fonts" or "dependencies added: none", search every file you deliver, demo pages included, for `http://` and `https://` and list what you find.
 - **"Rendered" means a browser tool opened it in this session.** Reading the code or the DOM is not a render. If nothing was opened, write "Rendered: no" and keep the render-only items open. A usability claim counts when `ux-laws` evidence supports it.
 - **Report what you didn't run**, including skipped stages, unrendered output and unverified third-party claims.
 

@@ -53,8 +53,8 @@ The stage-by-stage procedure. Each stage has an input, the action, an output (a 
 ### Build manifest
 - Files created or changed: [paths]
 - Tokens: [file and class, or the existing tokens the style was mapped onto]. Say "unchanged" only if the pasted block is identical to the source, and list every edit otherwise (font stacks count).
-- Colour pairs used: [ledger row ids, plus any pair you recomputed and its ratio]
-- Dependencies added: [none, or name and the user's agreement]
+- Colour pairs used: [ledger row ids, plus any pair you recomputed, with its two luminances and its ratio]
+- Dependencies added: [none, or name and the user's agreement]. Write "none" only after searching every delivered file, demo pages included, for `http://` and `https://`.
 - Rendered and checked in a browser: [yes, with the tool named | no]. Never "yes" for a code or DOM read.
 ```
 

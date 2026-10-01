@@ -60,7 +60,8 @@
         "Chooses Design mode, treats \"keep it usable\" as a build constraint, and marks the audit and fix stages Not run with an offer to audit",
         "Applies the Y2K Requires rule (text on a solid surface, never on gradients) and keeps the snippet's markup structure",
         "Writes no rule whose selector is a bare html, body, * or element name, and gives each button an explicit type",
-        "States whether it rendered the result and does not write \"rendered\" if it only read the code"
+        "States whether it rendered the result and does not write \"rendered\" if it only read the code",
+        "Searches its delivered files for http(s):// before stating its dependencies, and shows both luminances beside any ratio it computes"
       ]
     }
   ]
