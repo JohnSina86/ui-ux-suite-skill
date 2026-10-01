@@ -52,7 +52,7 @@ The stage-by-stage procedure. Each stage has an input, the action, an output (a 
 ```markdown
 ### Build manifest
 - Files created or changed: [paths]
-- Tokens: [file and class, or the existing tokens the style was mapped onto]
+- Tokens: [file and class, or the existing tokens the style was mapped onto]. Say "unchanged" only if the pasted block is identical to the source, and list every edit otherwise (font stacks count).
 - Colour pairs used: [ledger row ids, plus any pair you recomputed and its ratio]
 - Dependencies added: [none, or name and the user's agreement]
 - Rendered and checked in a browser: [yes | no]

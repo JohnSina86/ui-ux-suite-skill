@@ -50,7 +50,7 @@ Full rules and worked cases are in [conflict-rules.md](references/conflict-rules
 
 ## 4. Evidence and honesty
 - **Audit what you can observe.** Say which source the audit used: live page, source code, screenshot or description. If the UI was just generated and never rendered, the audit is on **source code only**, and every law that needs live behaviour is **Not assessed** with the evidence it would need.
-- **Say when it is a self-audit.** You built it and you graded it, so it is not independent. State that, and offer a fresh-session review for anything that matters.
+- **Say when it is a self-audit.** You built it and you graded it, so it is not independent. State that, and offer a fresh-session review for anything that matters. Label every row that rests on a static estimate as one, call the score **indicative**, and don't headline a perfect score. A re-audit after your own fixes checks the edits, not the page.
 - **Don't turn "I wrote the rule" into "it passes".** A contrast pair counts when it is in the `ui-styles` ledger or you recomputed it. A usability claim counts when `ux-laws` evidence supports it.
 - **Report what you didn't run**, including skipped stages, unrendered output and unverified third-party claims.
 
