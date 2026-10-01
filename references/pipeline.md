@@ -58,7 +58,7 @@ The stage-by-stage procedure. Each stage has an input, the action, an output (a 
 - Rendered and checked in a browser: [yes | no]
 ```
 
-**Gate:** the `ui-styles` pre-delivery checklist is done. If you couldn't render the result, the manifest says so, and stage 4 uses source code as its evidence.
+**Gate:** the `ui-styles` pre-delivery checklist is done, except for items that need a render (narrow width, 200% zoom, observed focus, reduced motion). If you couldn't render the result, keep those items **open**, list them in the manifest as "Not verified: needs a render", and go on to stage 4 with source code as its evidence. Don't call the whole checklist done.
 
 ## Stage 4: Audit
 **Input:** the built result and the Brief block's three tasks.
@@ -101,5 +101,5 @@ Assemble [report-template.md](report-template.md). Keep each section short and l
 ## Short modes
 - **Advise:** stages 1 and 2, then answer with the recommendation, reasons and risk. No CSS or files unless asked.
 - **Design:** stages 1, 2, 3 and 6. Note in the report that no audit was run, and offer one.
-- **Polish:** a short brief, stage 4, stage 5, one re-audit and the report. Don't restyle anything the findings don't touch.
+- **Polish:** a short brief, stage 4, stage 5, one re-audit and the report. If the user also asked for a restyle, run stages 2 and 3 for the parts they named after the audit and before the fixes, so the audit comes first. Otherwise don't restyle anything the findings don't touch.
 - **Review only:** not a mode here. A review with no fixes asked for goes to `ux-laws` alone.

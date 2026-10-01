@@ -9,4 +9,4 @@ Run this checklist before tagging. Each step is a manual check.
 5. **Companion pins:** the README install lines name tags that exist. When a companion releases, update the pins and the changelog.
 6. **Modes and gates:** each mode in `SKILL.md` section 1 appears in `references/pipeline.md` (the stage table or the short modes), and each stage has a gate.
 7. **Evals:** run the four functional evals by hand (`evals/README.md`), including the missing-companion case, and record the results in the release notes.
-8. **Tag:** `git tag -a vX.Y.Z -m vX.Y.Z` after merging, then update the README status line and the changelog.
+8. **Tag:** update the README status line and the changelog **first**, and commit them. Then run `git tag -a vX.Y.Z -m vX.Y.Z`, and check the tagged tree with `git show vX.Y.Z:README.md`.

@@ -23,7 +23,7 @@ This skill is the **conductor**. It owns the order of work, the handoffs between
 | A style recommendation only | **Advise** | 1, 2, then stop |
 | A new UI or a restyle, with no checking asked | **Design** | 1, 2, 3, 6 |
 | A UI built and checked | **Full** | 1 to 6 |
-| An existing UI reviewed and then fixed or restyled | **Polish** | 1 (short), 4, 5, one re-audit, 6 |
+| An existing UI reviewed and then fixed, or fixed and restyled | **Polish** | 1 (short), 4, then 2 and 3 only if a restyle was asked, 5, one re-audit, 6 |
 
 If the request is a single task, route it directly. "Make this Neo-Brutalist" is `ui-styles` alone, and "audit the UX of this page" is `ux-laws` alone. A review with no fixes asked for is `ux-laws` alone, so there is no Audit mode here. Don't run the pipeline around a request that one skill covers.
 
@@ -63,7 +63,7 @@ Full rules and worked cases are in [conflict-rules.md](references/conflict-rules
 Check each item only for the stages in your mode. A stage you skipped needs a **Not run** line with its reason, not its artefact.
 - [ ] Mode stated, and every stage in it completed or marked **Not run** with a reason (an unavailable companion is a valid reason).
 - [ ] Each completed stage's block exists in the combined report: brief, style decision, build manifest, audit with its full 20-row table, fix log.
-- [ ] If stage 3 ran, the `ui-styles` pre-delivery checklist is done, and every colour pair in the delivered CSS is in the ledger or was recomputed, including any changed in stage 5.
+- [ ] If stage 3 ran, the `ui-styles` pre-delivery checklist is done (render-only items listed as open if you couldn't render), and every colour pair in the delivered CSS is in the ledger or was recomputed, including any changed in stage 5.
 - [ ] If stage 4 ran, the `ux-laws` audit-completeness checklist is done, the evidence source is named, **Not assessed** rows list the evidence needed, and a self-audit is labelled as one.
 - [ ] Open risks and everything not run are listed.
 
