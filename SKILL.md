@@ -4,7 +4,7 @@ description: >-
   Runs a complete UI/UX job in order: brief, style choice, build, evidence-based UX audit, fixes and one combined report, using the ui-styles and ux-laws skills. Use when the user wants a design built and checked, or a UX review followed by fixes. Not for a single task one of those skills covers alone, WCAG conformance audits or performance profiling.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # UI/UX Suite
@@ -24,6 +24,8 @@ This skill is the **conductor**. It owns the order of work, the handoffs between
 | A new UI or a restyle, with no checking asked | **Design** | 1, 2, 3, 6 |
 | A UI built and checked | **Full** | 1 to 6 |
 | An existing UI reviewed and then fixed, or fixed and restyled | **Polish** | 1 (short), 4, then 2 and 3 only if a restyle was asked, 5, one re-audit, 6 |
+
+**Constraints are not audit requests.** "Keep it usable", "make it accessible" and "keep the look" shape the build or the fix. Choose Full or Polish only when the user asks you to review, check, audit or test, or to fix a problem. "Make this look Y2K but keep it usable" is Design.
 
 If the request is a single task, route it directly. "Make this Neo-Brutalist" is `ui-styles` alone, and "audit the UX of this page" is `ux-laws` alone. A review with no fixes asked for is `ux-laws` alone, so there is no Audit mode here. Don't run the pipeline around a request that one skill covers.
 
@@ -50,7 +52,8 @@ Full rules and worked cases are in [conflict-rules.md](references/conflict-rules
 ## 4. Evidence and honesty
 - **Audit what you can observe.** Say which source the audit used: live page, source code, screenshot or description. If the UI was just generated and never rendered, the audit is on **source code only**, and every law that needs live behaviour is **Not assessed** with the evidence it would need.
 - **Say when it is a self-audit.** You built it and you graded it, so it is not independent. State that, and offer a fresh-session review for anything that matters. Label every row that rests on a static estimate as one, call the score **indicative**, and don't headline a perfect score. A re-audit after your own fixes checks the edits, not the page.
-- **Don't turn "I wrote the rule" into "it passes".** A contrast pair counts when it is in the `ui-styles` ledger or you recomputed it. A usability claim counts when `ux-laws` evidence supports it.
+- **Don't turn "I wrote the rule" into "it passes".** A contrast pair counts when it is in the `ui-styles` ledger or you recomputed it. A ledger row covers only the surface it names, so the same colour on another surface is a new pair to recompute, and the row's ratio must not be quoted for it.
+- **"Rendered" means a browser tool opened it in this session.** Reading the code or the DOM is not a render. If nothing was opened, write "Rendered: no" and keep the render-only items open. A usability claim counts when `ux-laws` evidence supports it.
 - **Report what you didn't run**, including skipped stages, unrendered output and unverified third-party claims.
 
 ## 5. Never

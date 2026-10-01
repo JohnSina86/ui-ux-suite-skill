@@ -55,7 +55,7 @@ The stage-by-stage procedure. Each stage has an input, the action, an output (a 
 - Tokens: [file and class, or the existing tokens the style was mapped onto]. Say "unchanged" only if the pasted block is identical to the source, and list every edit otherwise (font stacks count).
 - Colour pairs used: [ledger row ids, plus any pair you recomputed and its ratio]
 - Dependencies added: [none, or name and the user's agreement]
-- Rendered and checked in a browser: [yes | no]
+- Rendered and checked in a browser: [yes, with the tool named | no]. Never "yes" for a code or DOM read.
 ```
 
 **Gate:** the `ui-styles` pre-delivery checklist is done, except for items that need a render (narrow width, 200% zoom, observed focus, reduced motion). If you couldn't render the result, keep those items **open**, list them in the manifest as "Not verified: needs a render", and go on to stage 4 with source code as its evidence. Don't call the whole checklist done.

@@ -50,6 +50,18 @@
         "Names the risk and the requirement for each proposed style",
         "Writes no CSS, token files or components"
       ]
+    },
+    {
+      "id": 5,
+      "prompt": "Make this pricing section look Y2K but keep it usable.\n\n<section class=\"plans\"><h2>Plans</h2><div class=\"plan\"><h3>Basic</h3><p>$9 / month</p><button>Choose</button></div><div class=\"plan\"><h3>Pro</h3><p>$29 / month</p><button>Choose</button></div></section>",
+      "expected_output": "A Design-mode run: brief, style decision, build manifest and report, with no UX audit, a scoped stylesheet, typed buttons, and an honest statement of whether anything was rendered.",
+      "files": [],
+      "expectations": [
+        "Chooses Design mode, treats \"keep it usable\" as a build constraint, and marks the audit and fix stages Not run with an offer to audit",
+        "Applies the Y2K Requires rule (text on a solid surface, never on gradients) and keeps the snippet's markup structure",
+        "Writes no rule whose selector is a bare html, body, * or element name, and gives each button an explicit type",
+        "States whether it rendered the result and does not write \"rendered\" if it only read the code"
+      ]
     }
   ]
 }
