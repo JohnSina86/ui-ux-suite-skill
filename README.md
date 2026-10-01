@@ -4,7 +4,7 @@ An agent skill that runs a complete UI/UX job in order: **brief, style choice, b
 
 It is a conductor, not a merged copy. It owns the order of work, the handoffs and the report. The style tokens and CSS rules stay in [`ui-styles`](https://github.com/JohnSina86/ui-styles-skill), and the laws and the audit rubric stay in [`ux-laws`](https://github.com/JohnSina86/ux-laws-skill). Keeping one copy of each means the three can't drift apart.
 
-> **Current release: `v1.0.0`.** To confirm an install, run `git -C <install dir> describe --tags`, which should print `v1.0.0`. The install lines below pin the two companion skills to `v1.2.0`.
+> **Current release: `v1.0.1`.** To confirm an install, run `git -C <install dir> describe --tags`, which should print `v1.0.1`. The install lines below pin the two companion skills to `v1.2.1`.
 
 ## What you get
 - **Four modes**: Advise (style recommendation only), Design (restyle or build), Full (build and check) and Polish (review, fix, re-check once). A review with no fixes asked for goes straight to `ux-laws`.
@@ -21,15 +21,15 @@ This skill needs both companions. Install all three into the same skills folder.
 ### Claude Code (user level)
 ```bash
 mkdir -p ~/.claude/skills && cd ~/.claude/skills
-git clone --branch v1.2.0 https://github.com/JohnSina86/ui-styles-skill.git ui-styles
-git clone --branch v1.2.0 https://github.com/JohnSina86/ux-laws-skill.git ux-laws
-git clone --branch v1.0.0 https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
+git clone --branch v1.2.1 https://github.com/JohnSina86/ui-styles-skill.git ui-styles
+git clone --branch v1.2.1 https://github.com/JohnSina86/ux-laws-skill.git ux-laws
+git clone --branch v1.0.1 https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
 ```
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null; Set-Location "$HOME\.claude\skills"
-git clone --branch v1.2.0 https://github.com/JohnSina86/ui-styles-skill.git ui-styles
-git clone --branch v1.2.0 https://github.com/JohnSina86/ux-laws-skill.git ux-laws
-git clone --branch v1.0.0 https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
+git clone --branch v1.2.1 https://github.com/JohnSina86/ui-styles-skill.git ui-styles
+git clone --branch v1.2.1 https://github.com/JohnSina86/ux-laws-skill.git ux-laws
+git clone --branch v1.0.1 https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
 ```
 For a project, run the same commands inside `.claude/skills` at the project root. The folder names must stay `ui-styles`, `ux-laws` and `ui-ux-suite`, because they match each skill's `name`.
 
@@ -46,7 +46,7 @@ RELEASING.md                  the release checklist
 ```
 
 ## Changelog
-- **v1.0.1 (unreleased)**: a constraint such as "keep it usable" no longer selects an audit, a ledger ratio applies only to its own surface, and "rendered" is claimed only after a browser tool opened the result. Found by a blind comparison against another design skill.
+- **v1.0.1**: a constraint such as "keep it usable" no longer selects an audit, a ledger ratio applies only to its own surface, and "rendered" is claimed only after a browser tool opened the result. Found by a blind comparison against another design skill.
 - **v1.0.0**: first version.
 
 ## Licence
