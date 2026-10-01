@@ -1,0 +1,22 @@
+[
+  {"query": "Design and build a pricing page for my SaaS, pick a style, and then review the UX before you hand it over", "should_trigger": true},
+  {"query": "Make this page Neo-Brutalist", "should_trigger": false},
+  {"query": "Take my onboarding flow from rough idea to a styled, built and audited screen", "should_trigger": true},
+  {"query": "Audit the UX of this checkout page against Hick's and Fitts's laws", "should_trigger": false},
+  {"query": "Do a full UI and UX pass on my dashboard: restyle it, then check the usability and fix what you find", "should_trigger": true},
+  {"query": "Check this page for WCAG 2.2 AA conformance", "should_trigger": false},
+  {"query": "I need a complete design package for a booking app: visual style, built components and a UX review", "should_trigger": true},
+  {"query": "Which colour palette suits a bakery website?", "should_trigger": false},
+  {"query": "Build me a glassmorphism settings screen and then audit it and fix any problems", "should_trigger": true},
+  {"query": "Profile why my page takes four seconds to load", "should_trigger": false},
+  {"query": "Review this login form's UX and then redesign it in a Swiss style", "should_trigger": true},
+  {"query": "Write the microcopy for my empty states", "should_trigger": false},
+  {"query": "Run the whole UI/UX workflow on my admin panel: brief, style, build, audit, fixes and a report", "should_trigger": true},
+  {"query": "Add a Cyberpunk theme to my existing Tailwind project", "should_trigger": false},
+  {"query": "Polish my landing page: audit the UX first, then fix the issues and restyle the hero", "should_trigger": true},
+  {"query": "Pick an icon library for my React app", "should_trigger": false},
+  {"query": "End to end: choose a style for my fintech app, build the dashboard and audit it with the laws of UX", "should_trigger": true},
+  {"query": "Explain the Doherty threshold to me", "should_trigger": false},
+  {"query": "Take this prototype and give me a styled, tested and reviewed screen with a single write-up", "should_trigger": true},
+  {"query": "Fix the CSS bug where my modal doesn't centre", "should_trigger": false}
+]

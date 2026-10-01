@@ -1,0 +1,55 @@
+{
+  "skill_name": "ui-ux-suite",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Build a settings page for a time-tracking app in a Swiss style, then check it. The project is a Tailwind v4 app with no existing design system. You can't open a browser in this environment.",
+      "expected_output": "A Full-mode run: a short brief, a style decision, built files, an audit that admits it is source-code-only and a self-audit, a bounded fix pass, and one combined report.",
+      "files": [],
+      "expectations": [
+        "States the mode it chose (Full) and writes or infers a brief that includes a surface type and the tasks users must complete",
+        "Takes the style from the ui-styles skill (Swiss tokens, Tailwind v4 mapping) and does not invent token values from memory",
+        "Says the audit used source code only and that it is a self-audit of its own output",
+        "Marks laws that need live behaviour or usage data as Not assessed and names the evidence needed, instead of scoring them",
+        "Makes at most one fix batch and one re-audit, and ends with one combined report that lists what was not run",
+        "Does not claim the page is accessible or WCAG-conformant"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Audit the UX of this checkout form and tell me what to fix, but don't restyle anything.\n\n<form class=\"checkout\"><h2>Pay</h2><input placeholder=\"Card number\"><input placeholder=\"Expiry\"><input placeholder=\"CVC\"><div class=\"promo\"><a href=\"#\">Have a promo code?</a></div><button class=\"x\">Pay now</button><button class=\"x secondary\">Cancel</button></form>",
+      "expected_output": "An Audit-mode run that uses the ux-laws report structure on the supplied markup, with source-code evidence only, and no restyling.",
+      "files": [],
+      "expectations": [
+        "Chooses Audit mode and does not run the style or build stages",
+        "Grades only what the markup shows, names source code as the evidence, and marks usage-based laws Not assessed with the evidence needed",
+        "Produces the ux-laws report structure with its scope note that this is not a WCAG conformance result",
+        "Lists concrete fixes for the Fail and Warning rows but does not change colours, fonts or visual style"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Build a landing page hero in Glassmorphism for a crypto wallet, then audit it for UX. Note: in this environment the ux-laws skill is not installed.",
+      "expected_output": "The build stage is done with ui-styles. The audit stage is marked Not run because ux-laws is unavailable, with an install line, and no audit is invented.",
+      "files": [],
+      "expectations": [
+        "Builds the hero using the ui-styles Glassmorphism guidance, including its readability requirement",
+        "Says the audit stage was Not run because ux-laws is unavailable, and gives an install line",
+        "Does not produce a UX score or law-by-law audit from memory",
+        "Lists the skipped audit under what was not run in its report"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I'm building a legal-tech dashboard for law firms. Which visual style should we use? Just advise me.",
+      "expected_output": "An Advise-mode answer: a primary and secondary style with reasons and risk, and no code.",
+      "files": [],
+      "expectations": [
+        "Chooses Advise mode and stops after the style decision",
+        "Proposes a primary and a secondary style with one reason each, and does not propose a style the product-fit guidance lists under Avoid for a comparable product",
+        "Names the risk and the requirement for each proposed style",
+        "Writes no CSS, token files or components"
+      ]
+    }
+  ]
+}
