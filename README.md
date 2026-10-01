@@ -46,6 +46,7 @@ RELEASING.md                  the release checklist
 ```
 
 ## Changelog
+- **v1.0.2 (unreleased)**: a ratio you compute must show its luminances, "dependencies: none" is written only after searching the delivered files for http(s)://, and the install lines will pin the new `ui-styles` once it is released. Found by a third blind comparison.
 - **v1.0.1**: a constraint such as "keep it usable" no longer selects an audit, a ledger ratio applies only to its own surface, and "rendered" is claimed only after a browser tool opened the result. Found by a blind comparison against another design skill.
 - **v1.0.0**: first version.
 
