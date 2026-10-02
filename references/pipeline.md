@@ -26,6 +26,8 @@ The stage-by-stage procedure. Each stage has an input, the action, an output (a 
 - Assumptions made: [list, or "none"]
 ```
 
+In plain-language mode, collect the Brief with the three questions in [guided-start.md](guided-start.md) instead.
+
 **Gate:** every field is filled or marked as an assumption. The surface type matters, because `ux-laws` applies a different set of laws to each type.
 
 ## Stage 2: Style

@@ -6,6 +6,22 @@ It is a conductor, not a merged copy. It owns the order of work, the handoffs an
 
 > **Current release: `v1.0.1`.** To confirm an install, run `git -C <install dir> describe --tags`, which should print `v1.0.1`. The install lines below pin the two companion skills to `v1.2.1`.
 
+## No developer? Start here
+You don't need to know any technical words. Install the three skills, then say what you want in your own words, for example: *"I run a bakery and need a page that looks professional so people can order."*
+
+1. The skill asks **at most three** short questions with choices. Say "you choose" to skip them.
+2. It builds the page and checks it, and tells you what it could and couldn't check.
+3. The report starts with an **"In plain words"** box, tells you which of four levels you've reached, and gives you one next step you can paste back in.
+
+| Level | Name | Meaning |
+| :-: | :--- | :--- |
+| 1 | Looks right | A style was chosen and built. |
+| 2 | Easy to read and use | The build checklist is done. |
+| 3 | Checked | A UX audit ran and fixes were re-checked. |
+| 4 | Ready for real people | Never awarded by the skill. It lists what a person still needs to do. |
+
+A level is a progress marker, not a certificate. The full technical report always follows the plain box, so a developer can pick the work up from there.
+
 ## What you get
 - **Four modes**: Advise (style recommendation only), Design (restyle or build), Full (build and check) and Polish (review, fix, re-check once). A review with no fixes asked for goes straight to `ux-laws`.
 - **Gates between stages**, so a style isn't chosen before the brief exists, and nothing is reported before its checklist is done.
@@ -41,11 +57,14 @@ SKILL.md                      the conductor: modes, pipeline, rules, definition 
 references/pipeline.md        stage procedure, handoff blocks and gates
 references/conflict-rules.md  precedence and worked cases
 references/report-template.md the combined report
-evals/                        4 functional evals and 20 trigger queries (data only)
+references/guided-start.md    plain-language intake, the four levels, next-step prompts
+references/plain-language.md  the plain-words block and everyday wording
+evals/                        6 functional evals and 20 trigger queries (data only)
 RELEASING.md                  the release checklist
 ```
 
 ## Changelog
+- **v1.1.0 (unreleased)**: plain-language mode for non-developers: a three-question guided start, a four-level progress ladder that never awards the top level, an "In plain words" report block with everyday wording, and ready-to-paste next-step prompts. The full technical report is unchanged and still follows. The trigger set has not been re-run with plain-language phrasings.
 - **v1.0.2 (unreleased)**: a ratio you compute must show its luminances, "dependencies: none" is written only after searching the delivered files for http(s)://, and the install lines will pin the new `ui-styles` once it is released. Found by a third blind comparison.
 - **v1.0.1**: a constraint such as "keep it usable" no longer selects an audit, a ledger ratio applies only to its own surface, and "rendered" is claimed only after a browser tool opened the result. Found by a blind comparison against another design skill.
 - **v1.0.0**: first version.
