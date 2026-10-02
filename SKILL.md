@@ -4,7 +4,7 @@ description: >-
   Runs a complete UI/UX job in order: brief, style choice, build, evidence-based UX audit, fixes and one combined report, using the ui-styles and ux-laws skills. Use when the user wants a design built and checked, or a UX review followed by fixes. Plain-language mode for non-developers. Not for a single task one of those skills covers alone, WCAG audits or performance profiling.
 license: MIT
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
 ---
 
 # UI/UX Suite
