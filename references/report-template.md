@@ -5,6 +5,9 @@ One report for the whole job. Keep each section short, link to files, and skip a
 ```markdown
 # UI/UX package: [project or screen]
 
+## In plain words  (plain-language mode only; see plain-language.md)
+[at most 120 words: what you have and how to open it, what is in good shape, what I couldn't check, where you are (level), your next step]
+
 ## Summary
 - **Mode**: [Advise | Design | Full | Polish]
 - **Outcome**: [two sentences: what exists now, and the main open risk]
@@ -46,3 +49,4 @@ One report for the whole job. Keep each section short, link to files, and skip a
 - If an audit ran, the full 20-row table is in the report and the summary numbers match it.
 - The numbers in the summary match the rows beneath them.
 - No claim of accessibility or WCAG conformance anywhere in the report.
+- In plain-language mode: the plain block comes first, uses everyday wording, names the level and one next step, and the full report below it is unchanged.

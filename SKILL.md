@@ -1,10 +1,10 @@
 ---
 name: ui-ux-suite
 description: >-
-  Runs a complete UI/UX job in order: brief, style choice, build, evidence-based UX audit, fixes and one combined report, using the ui-styles and ux-laws skills. Use when the user wants a design built and checked, or a UX review followed by fixes. Not for a single task one of those skills covers alone, WCAG conformance audits or performance profiling.
+  Runs a complete UI/UX job in order: brief, style choice, build, evidence-based UX audit, fixes and one combined report, using the ui-styles and ux-laws skills. Use when the user wants a design built and checked, or a UX review followed by fixes. Plain-language mode for non-developers. Not for a single task one of those skills covers alone, WCAG audits or performance profiling.
 license: MIT
 metadata:
-  version: "1.0.2"
+  version: "1.1.0"
 ---
 
 # UI/UX Suite
@@ -15,7 +15,8 @@ This skill is the **conductor**. It owns the order of work, the handoffs between
 1. **Check both skills are available** in this session. If one is missing, say which, give the install line from [README.md](README.md), and continue only with the stages that don't need it. Mark each skipped stage **Not run: `<skill>` unavailable**, and never recreate the missing skill's content from memory.
 2. **Existing design system first.** The `ui-styles` rule applies to the whole job: map a style onto the project's own tokens as an accent layer, and replace the system only if the user asks.
 3. **Honour stated constraints** (platform, framework, content-security policy, "desktop only", no new dependencies). Ask at most three questions, and only when the answer changes the work. Otherwise state your assumption and go on.
-4. **Pick the mode** in section 1, and say which one you chose.
+4. **Plain-language mode.** If the user says they aren't a developer, gives no code or stack, asks in everyday words, or says "you choose", use [guided-start.md](references/guided-start.md) for the intake and [plain-language.md](references/plain-language.md) for the report. It changes how you ask and report. It never skips a stage, relaxes a gate or shortens the audit.
+5. **Pick the mode** in section 1, and say which one you chose.
 
 ## 1. Modes
 | The user wants | Mode | Stages |
@@ -70,8 +71,11 @@ Check each item only for the stages in your mode. A stage you skipped needs a **
 - [ ] If stage 3 ran, the `ui-styles` pre-delivery checklist is done (render-only items listed as open if you couldn't render), and every colour pair in the delivered CSS is in the ledger or was recomputed, including any changed in stage 5.
 - [ ] If stage 4 ran, the `ux-laws` audit-completeness checklist is done, the evidence source is named, **Not assessed** rows list the evidence needed, and a self-audit is labelled as one.
 - [ ] Open risks and everything not run are listed.
+- [ ] In plain-language mode: the "In plain words" block, the level reached and one next step are at the top, and the full technical report still follows.
 
 ## References
 - [pipeline.md](references/pipeline.md): the stage-by-stage procedure, handoff blocks and gates.
 - [conflict-rules.md](references/conflict-rules.md): precedence and worked cases where the two skills disagree.
 - [report-template.md](references/report-template.md): the combined report structure.
+- [guided-start.md](references/guided-start.md): the three-question intake, the four levels and the next-step prompts for non-developers.
+- [plain-language.md](references/plain-language.md): the plain-words block and everyday wording.

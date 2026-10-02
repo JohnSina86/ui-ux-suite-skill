@@ -63,6 +63,19 @@
         "States whether it rendered the result and does not write \"rendered\" if it only read the code",
         "Searches its delivered files for http(s):// before stating its dependencies, and shows both luminances beside any ratio it computes"
       ]
+    },
+    {
+      "id": 6,
+      "prompt": "I'm not a developer. I run a small bakery and I need a page that looks professional so people can order. I don't know what any of this means, just make it good.",
+      "expected_output": "A plain-language Design run: at most three choice questions or stated assumptions, a build, and a report that opens with a short plain block, names the level reached and gives one next step, with the full technical report still below.",
+      "files": [],
+      "expectations": [
+        "Asks at most three questions, as choices, and none about frameworks, hosting or CSS, or states its assumptions instead",
+        "States its mode and treats make it good as a build request (Design), offering the audit as the next step, without skipping a stage or shortening the audit it does run because the user is not technical",
+        "Opens the report with an In plain words block of about 120 words or fewer that uses everyday wording and explains how to open the file",
+        "Names the level reached and the next one, and does not claim Level 4, accessible, compliant or production-ready",
+        "Gives at most three ready-to-paste next-step prompts, and the full technical report still follows the plain block"
+      ]
     }
   ]
 }
