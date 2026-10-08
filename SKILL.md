@@ -1,10 +1,10 @@
 ---
 name: ui-ux-suite
 description: >-
-  Runs a complete UI/UX job in order: brief, style choice, build, evidence-based UX audit, fixes and one combined report, using the ui-styles and ux-laws skills. Use when the user wants a design built and checked, or a UX review followed by fixes. Plain-language mode for non-developers. Not for a single task one of those skills covers alone, WCAG audits or performance profiling.
+  Runs a complete UI/UX job in order: brief, style choice, build, UX audit, fixes and one report, using the ui-styles and ux-laws skills. Use when a design must be built and checked, or a UX review followed by fixes, for a screen or a whole site on desktop and mobile. Plain-language mode for non-developers. Not for a single task one of those skills covers alone, WCAG audits or performance profiling.
 license: MIT
 metadata:
-  version: "1.1.1"
+  version: "1.2.0"
 ---
 
 # UI/UX Suite
@@ -27,6 +27,8 @@ This skill is the **conductor**. It owns the order of work, the handoffs between
 | An existing UI reviewed and then fixed, or fixed and restyled | **Polish** | 1 (short), 4, then 2 and 3 only if a restyle was asked, 5, one re-audit, 6 |
 
 **Constraints are not audit requests.** "Keep it usable", "make it accessible" and "keep the look" shape the build or the fix. Choose Full or Polish only when the user asks you to review, check, audit or test, or to fix a problem. "Make this look Y2K but keep it usable" is Design.
+
+**Site sweep** is a scope, not a mode. **Choose the mode first** with the table above. Only if that mode is Polish or Full, and the request covers a site, several pages, or "desktop and mobile" (for example "iron out the kinks on PC and mobile"), add the site-sweep scope: a coverage plan, every planned page and viewport measured, and a report per template ([pipeline.md](references/pipeline.md) stage 1). Naming a site or "desktop and mobile" never turns a build (Design) or an advice request into an audit.
 
 If the request is a single task, route it directly. "Make this Neo-Brutalist" is `ui-styles` alone, and "audit the UX of this page" is `ux-laws` alone. A review with no fixes asked for is `ux-laws` alone, so there is no Audit mode here. Don't run the pipeline around a request that one skill covers.
 
@@ -52,10 +54,12 @@ Full rules and worked cases are in [conflict-rules.md](references/conflict-rules
 
 ## 4. Evidence and honesty
 - **Audit what you can observe.** Say which source the audit used: live page, source code, screenshot or description. If the UI was just generated and never rendered, the audit is on **source code only**, and every law that needs live behaviour is **Not assessed** with the evidence it would need.
-- **Say when it is a self-audit.** You built it and you graded it, so it is not independent. State that, and offer a fresh-session review for anything that matters. Label every row that rests on a static estimate as one, call the score **indicative**, and don't headline a perfect score. A re-audit after your own fixes checks the edits, not the page.
+- **Measure, then grade.** On a live page, run the `ux-laws` page probe on each covered page and viewport, and apply its false-positive rules before grading anything.
+- **Say when it is a self-audit.** You built it and you graded it, so it is not independent. If a fresh context is available, use [independent-audit.md](references/independent-audit.md) for the audit or at least the re-audit. Otherwise state that it is a self-audit and offer a fresh-session review for anything that matters. A code review is never a UX audit. Label every row that rests on a static estimate as one, call the score **indicative**, and don't headline a perfect score. A re-audit after your own fixes checks the edits, not the page.
 - **Don't turn "I wrote the rule" into "it passes".** A contrast pair counts when it is in the `ui-styles` ledger or you recomputed it. A ledger row covers only the surface it names, so the same colour on another surface is a new pair to recompute, and the row's ratio must not be quoted for it. When you compute a ratio, write both relative luminances beside it. A ratio with no luminances shown is a claim, not a recomputation.
 - **Check before you say "none".** Before writing "no remote fonts" or "dependencies added: none", search every file you deliver, demo pages included, for `http://` and `https://` and list what you find.
-- **"Rendered" means a browser tool opened it in this session.** Reading the code or the DOM is not a render. If nothing was opened, write "Rendered: no" and keep the render-only items open. A usability claim counts when `ux-laws` evidence supports it.
+- **Re-audits report row changes.** Show before → after with new evidence at every occurrence; the only headline score is the pre-fix one.
+- **"Rendered" means a browser tool opened it in this session.** Reading the code is not a render; a number measured in a page the browser tool opened is. If a screenshot times out mid-transition, wait and retry once, then rely on measurements and say so. If nothing was opened, write "Rendered: no" and keep the render-only items open. A usability claim counts when `ux-laws` evidence supports it.
 - **Report what you didn't run**, including skipped stages, unrendered output and unverified third-party claims.
 
 ## 5. Never
@@ -69,13 +73,16 @@ Check each item only for the stages in your mode. A stage you skipped needs a **
 - [ ] Mode stated, and every stage in it completed or marked **Not run** with a reason (an unavailable companion is a valid reason).
 - [ ] Each completed stage's block exists in the combined report: brief, style decision, build manifest, audit with its full 20-row table, fix log.
 - [ ] If stage 3 ran, the `ui-styles` pre-delivery checklist is done (render-only items listed as open if you couldn't render), and every colour pair in the delivered CSS is in the ledger or was recomputed, including any changed in stage 5.
-- [ ] If stage 4 ran, the `ux-laws` audit-completeness checklist is done, the evidence source is named, **Not assessed** rows list the evidence needed, and a self-audit is labelled as one.
-- [ ] Open risks and everything not run are listed.
+- [ ] If stage 4 ran, the `ux-laws` audit-completeness checklist is done (per template in a site sweep), the evidence source is named, **Not assessed** rows list the evidence needed, and a self-audit is labelled as one.
+- [ ] In a site sweep, the coverage matrix accounts for every planned page and viewport, with gaps listed and no site-wide score.
+- [ ] Spec deviations and owner decisions are in their own report sections, and no owner decision was acted on without the user.
+- [ ] Open risks and everything not run are listed, and the report location is stated.
 - [ ] In plain-language mode: the "In plain words" block, the level reached and one next step are at the top, and the full technical report still follows.
 
 ## References
 - [pipeline.md](references/pipeline.md): the stage-by-stage procedure, handoff blocks and gates.
 - [conflict-rules.md](references/conflict-rules.md): precedence and worked cases where the two skills disagree.
-- [report-template.md](references/report-template.md): the combined report structure.
+- [report-template.md](references/report-template.md): the combined report structure, including coverage, spec fidelity and owner decisions.
+- [independent-audit.md](references/independent-audit.md): the fresh-context audit handoff and prompt, and what does not count as one.
 - [guided-start.md](references/guided-start.md): the three-question intake, the four levels and the next-step prompts for non-developers.
 - [plain-language.md](references/plain-language.md): the plain-words block and everyday wording.

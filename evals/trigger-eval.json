@@ -18,5 +18,9 @@
   {"query": "End to end: choose a style for my fintech app, build the dashboard and audit it with the laws of UX", "should_trigger": true},
   {"query": "Explain the Doherty threshold to me", "should_trigger": false},
   {"query": "Take this prototype and give me a styled, tested and reviewed screen with a single write-up", "should_trigger": true},
-  {"query": "Fix the CSS bug where my modal doesn't centre", "should_trigger": false}
+  {"query": "Fix the CSS bug where my modal doesn't centre", "should_trigger": false},
+  {"query": "Please iron out the kinks in this website for PC and mobile", "should_trigger": true},
+  {"query": "Run Lighthouse on my site and tell me the performance score", "should_trigger": false},
+  {"query": "Polish the UX of these five pages on desktop and phone and fix what you find", "should_trigger": true},
+  {"query": "Check only the colour contrast of my buttons", "should_trigger": false}
 ]
