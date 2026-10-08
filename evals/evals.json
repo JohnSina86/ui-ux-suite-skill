@@ -4,12 +4,12 @@
     {
       "id": 1,
       "prompt": "Build a settings page for a time-tracking app in a Swiss style, then check it. The project is a Tailwind v4 app with no existing design system. You can't open a browser in this environment.",
-      "expected_output": "A Full-mode run: a short brief, a style decision, built files, an audit that admits it is source-code-only and a self-audit, a bounded fix pass, and one combined report.",
+      "expected_output": "A Full-mode run: a short brief, a style decision, built files, an audit that admits it is source-code-only and is either run in a fresh context per references/independent-audit.md or labelled a self-audit, a bounded fix pass, and one combined report.",
       "files": [],
       "expectations": [
         "States the mode it chose (Full) and writes or infers a brief that includes a surface type and the tasks users must complete",
         "Takes the style from the ui-styles skill (Swiss tokens, Tailwind v4 mapping) and does not invent token values from memory",
-        "Says the audit used source code only and that it is a self-audit of its own output",
+        "Says the audit used source code only, and either reports the fresh-context audit it ran per references/independent-audit.md or says it is a self-audit of its own output; each audit and re-audit carries the matching label",
         "Marks laws that need live behaviour or usage data as Not assessed and names the evidence needed, instead of scoring them",
         "Makes at most one fix batch and one re-audit, and ends with one combined report that lists what was not run",
         "Does not claim the page is accessible or WCAG-conformant"
@@ -75,6 +75,35 @@
         "Opens the report with an In plain words block of about 120 words or fewer that uses everyday wording and explains how to open the file",
         "Names the level reached and the next one, and does not claim Level 4, accessible, compliant or production-ready",
         "Gives at most three ready-to-paste next-step prompts, and the full technical report still follows the plain block"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Please iron out the kinks in this website for PC and mobile. It's a static marketing site in the folder [EVAL7_COPY], served at http://127.0.0.1:4180/ (pages: site-sections.html and overflow-unclipped.html; treat them as two templates). You can open it in a browser and edit the files in that folder. You built the pages earlier in this session. Don't commit anything.",
+      "expected_output": "A Polish run with a site-sweep scope: a coverage plan, the ux-laws page probe at every planned page and viewport, one audit per template, an independent or clearly labelled self-audit, one fix batch, a re-audit reported as row changes, and a report that states where it was saved.",
+      "files": [],
+      "expectations": [
+        "States Polish mode with a site-sweep scope and writes a coverage plan: the two pages as two templates, each with a surface type, and a viewport set (or names any viewport it skips and why)",
+        "Runs the ux-laws page probe on each planned page and viewport before grading, and fills a coverage matrix that accounts for every cell",
+        "Reports the horizontal overflow on overflow-unclipped.html as an unscored finding that goes through the fix log (fixed with a re-measured overflowX, or deferred with a reason), and does not report the clipped decoration on site-sections.html as one",
+        "Does not grade the stretched 'Read the case' card link as an undersized target without hit-testing it, and does not grade any law on line length alone",
+        "Produces one 20-row ux-laws table per template, with each Fail or Warning citing its page and viewport, and no site-wide score",
+        "Because it built the pages, runs the audit or re-audit in a fresh context per references/independent-audit.md if a subagent is available, otherwise labels it a self-audit; does not treat a code review as the audit",
+        "Reports the re-audit as before → after row changes with new evidence at every cited occurrence, and gives no post-fix headline score",
+        "States where the report was saved (a git-ignored folder, or inline) and does not commit"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Review this landing page against the copy document from our product owner and fix the UX problems you find.\n\nCopy document: 'Agricultural Index page. Title: Modelling and pricing agricultural index insurance. Intro: We map the crop, test each index on official yields and price the cover. Button directly under the intro and again at the end: Discuss an agriculture project.'\n\n<main><section class=\"head\"><h1>Modelling and pricing agricultural index insurance</h1><p>We map the crop, test each index on official yields and price the cover.</p></section><section><h2>What we model</h2><ul><li>Crop and exposure</li><li>Hazard</li></ul></section><section><a class=\"primary\" href=\"/contact\">Discuss an agriculture project</a></section></main>\n\nThe hero button on our home page currently goes to Projects; we haven't decided whether it should go to Solutions.",
+      "expected_output": "A Polish run whose report records the missing top button as a spec-fidelity deviation (not a law row), lists the home-page button target as a decision for the owner with a recommendation, does not change that target, and otherwise follows the normal audit and fix flow.",
+      "files": [],
+      "expectations": [
+        "Records under Spec and content fidelity that the copy document asks for the button directly under the intro and the page only has it at the end, with the location",
+        "Does not grade the spec deviation as a law row on its own, but may cite related evidence under a law where the ux-laws rubric independently supports it",
+        "Lists the home hero button target (Projects or Solutions) under Decisions for the owner, with a recommendation and its trade-off, and does not change it",
+        "Grades from source code only, names that as the evidence, and marks rendering-dependent and usage-based laws Not assessed with the evidence needed",
+        "Makes at most one fix batch (it may add the missing button, since the user's document asks for it) and reports the re-audit as row changes"
       ]
     }
   ]

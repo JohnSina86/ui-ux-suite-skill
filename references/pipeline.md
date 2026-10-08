@@ -28,7 +28,13 @@ The stage-by-stage procedure. Each stage has an input, the action, an output (a 
 
 In plain-language mode, collect the Brief with the three questions in [guided-start.md](guided-start.md) instead.
 
-**Gate:** every field is filled or marked as an assumption. The surface type matters, because `ux-laws` applies a different set of laws to each type.
+**Site sweep (a scope, not a mode).** Decide the mode first (`SKILL.md` section 1). Only when it is Polish or Full, and the user names a site, several pages, or "desktop and mobile", add a coverage plan to the Brief, following `ux-laws` `references/multi-surface.md`. In Design or Advise mode, "desktop and mobile" is a build constraint, not an audit request.
+```markdown
+- Coverage plan: [routes grouped by template; pages chosen per template (at least one, plus every page the user named); viewports (default: the ux-laws page-probe set); surface type per template]
+```
+The plan becomes the coverage matrix in the report. Each cell is later marked measured, screenshot only, source only, or not measured with a reason.
+
+**Gate:** every field is filled or marked as an assumption. The surface type matters, because `ux-laws` applies a different set of laws to each type. In a site sweep, each template has its own surface type.
 
 ## Stage 2: Style
 **Input:** the Brief block.
@@ -72,33 +78,46 @@ In plain-language mode, collect the Brief with the three questions in [guided-st
 
 Use the `ux-laws` interop table as a starting point for what to inspect, never as a finding. State plainly if this is a **self-audit** of something you just built.
 
+On a live page, **measure before grading**: run `ux-laws` `references/page-probe.md` on every covered page and viewport, and apply its false-positive rules. In a site sweep, classify, combine and close findings per `ux-laws` `references/multi-surface.md`: one 20-row table per template, every Fail or Warning citing its page and viewport, gaps listed, and no site-wide score.
+
+**Independence.** If the UI was built or edited in this session, prefer a fresh-context audit: follow [independent-audit.md](independent-audit.md). A code review or inspection is not a UX audit and never passes this gate.
+
 ```markdown
 ### Audit summary
 - Evidence source: [live | source code | screenshot | description]
-- Self-audit: [yes | no]
-- Score line: [as defined by `ux-laws`, or "no score, insufficient evidence"]
-- Fail and Warning rows: [law, one-line evidence, location]
+- Coverage: [pages × viewports measured, and gaps; or "one surface"]
+- Self-audit: [yes | no, independent fresh context per independent-audit.md]
+- Score line: [as defined by `ux-laws`, per template in a sweep, or "no score, insufficient evidence"]
+- Fail and Warning rows: [law, one-line evidence, page and viewport]
+- Unscored findings: [probe diagnostics that need action whether or not a law grades them, such as horizontal overflow: what, page and viewport; or "none"]
 - Not assessed: [law, evidence needed]
 ```
 
-**Gate:** the `ux-laws` audit-completeness checklist is done.
+**Unscored findings** are probe results the `ux-laws` false-positive rules call findings, such as document overflow, but which no law row grades on its own. They stay unscored and never change the score, but they go through stage 5 and the report like rows do.
+
+**Gate:** the `ux-laws` audit-completeness checklist is done (for each template in a sweep), the coverage matrix accounts for every planned cell, and every unscored finding is listed.
 
 ## Stage 5: Fix
-**Input:** the Fail and Warning rows.
+**Input:** the Fail and Warning rows, and the unscored findings.
 
-**Action:** turn each into a concrete edit. Order them by severity, and fix in one batch. For each edit, apply [conflict-rules.md](conflict-rules.md) if it touches colour, size or the style's look. Recompute any changed colour pair and update its ledger row or note. Then re-audit the changed rows **once**.
+**Action:** turn each into a concrete edit. Order them by severity, and fix in one batch. For each edit, apply [conflict-rules.md](conflict-rules.md) if it touches colour, size or the style's look. Recompute any changed colour pair with `ui-styles` `references/contrast-check.md` and update its ledger row or note. Then re-audit the changed rows **once**, with fresh evidence at every occurrence the finding cited, of a kind that can show it (`ux-laws` `references/multi-surface.md` §4). Geometry and overflow need a new live measurement, or a labelled static estimate when no page can be opened. A defect the source proves, such as an untyped Cancel button, can close on the corrected source.
 
 ```markdown
 ### Fix log
-| Row | Change | Files | Re-checked |
+| Row | Change | Files | Re-checked (before → after, per occurrence) |
 | :--- | :--- | :--- | :--- |
-| [law and finding] | [what changed] | [paths] | [pass | still open, why] |
+| [law and finding] | [what changed] | [paths] | [Warning → Pass: 66×19 → 66×49 @375 on /a/, /b/ | still open, why] |
+| [Unscored: overflow on /c/ @375] | [what changed] | [paths] | [overflowX 188 → 0 @375 on /c/ (fixed) | deferred, why] |
 ```
 
-**Gate:** every Fail and Warning is fixed, or deferred with a reason. If rows remain after the one re-audit, they go into the report as open risks. Don't loop again.
+**Re-audit output is row changes, not a new score.** The report's only headline score is the stage-4 score. A post-fix score may appear only labelled "indicative, edits only", never as a headline. A finding closes only with new evidence, of a kind that can show it, at every occurrence it cited; an occurrence that wasn't checked again stays open.
+
+**Gate:** every Fail and Warning, and every unscored finding, is fixed with re-check evidence or deferred with a reason. If any remain after the one re-audit, they go into the report as open risks. Don't loop again.
 
 ## Stage 6: Report
-Assemble [report-template.md](report-template.md). Keep each section short and link to the files, but include the **full `ux-laws` audit** (all 20 rows, the counts, the conformance notes) inside the report so the score can be checked from the document alone.
+Assemble [report-template.md](report-template.md). Keep each section short and link to the files, but include the **full `ux-laws` audit** (all 20 rows, the counts, the conformance notes, per template in a sweep) inside the report so the score can be checked from the document alone.
+
+**Where it goes.** Write the report to a git-ignored scratch folder in the project if one exists: check `.gitignore` for `output/`, `tmp/` or similar. Otherwise ask once, or deliver it inline. Never write it into tracked source, and say where it went.
 
 ## Short modes
 - **Advise:** stages 1 and 2, then answer with the recommendation, reasons and risk. No CSS or files unless asked.

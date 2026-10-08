@@ -76,14 +76,20 @@ install.sh, install.ps1       one-step install of the two companion skills (for 
 SKILL.md                      the conductor: modes, pipeline, rules, definition of done
 references/pipeline.md        stage procedure, handoff blocks and gates
 references/conflict-rules.md  precedence and worked cases
-references/report-template.md the combined report
+references/report-template.md the combined report, with coverage, spec fidelity and owner decisions
+references/independent-audit.md the fresh-context audit handoff and prompt
 references/guided-start.md    plain-language intake, the four levels, next-step prompts
 references/plain-language.md  the plain-words block and everyday wording
-evals/                        6 functional evals and 20 trigger queries (data only)
+evals/                        8 functional evals and 24 trigger queries (data only)
 RELEASING.md                  the release checklist
 ```
 
 ## Changelog
+- **v1.2.0 (unreleased)**: lessons from two live audits of a static marketing site.
+  - **Site sweep** scope (coverage plan, templates with their own surface type, a coverage matrix, one audit per template, no site-wide score). **Measure, then grade** with the `ux-laws` page probe.
+  - **Independent audit**: `references/independent-audit.md` hands a fresh context the verbatim Brief and specs, never the builder's findings, with the `ux-laws` output contract. A code review never counts.
+  - **Re-audits report row changes** per occurrence; the only headline score is the pre-fix one. The report gains coverage, spec fidelity, owner decisions and a stated location. Measured DOM numbers count as render evidence. Evals 7 and 8, and four trigger queries.
+  - **Needs** `ux-laws` ≥ 1.3.0 and `ui-styles` ≥ 1.3.0. The install pins stay on the current tags until those are tagged.
 - **v1.1.1**: `install.sh` and `install.ps1` install the two companion skills beside the suite in one step, and update them on a re-run. Tested on bash and Windows PowerShell 5.1: fresh install, re-run, pinned tag, a blocking folder and a bad ref.
 - **v1.1.0**: plain-language mode for non-developers: a three-question guided start, a four-level progress ladder that never awards the top level, an "In plain words" report block with everyday wording, and ready-to-paste next-step prompts. The full technical report is unchanged and still follows. The trigger set has not been re-run with plain-language phrasings.
 - **v1.0.2**: a ratio you compute must show its luminances, "dependencies: none" is written only after searching the delivered files for http(s)://, and the install lines will pin the new `ui-styles` once it is released. Found by a third blind comparison.
