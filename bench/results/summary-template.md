@@ -72,9 +72,17 @@ One table per brief and builder. Rows are the 20 law rows as the `ux-laws` repor
 
 | Law row | B status | C status | Change | Evidence source (B / C) | Note |
 | :-: | :--- | :--- | :--- | :--- | :--- |
-| 1 | <Pass | Warning | Fail | N/A | Not assessed> | <...> | <same | better | worse | assessed to Not assessed | became N/A> | <...> | <for N/A: the evidence that the trigger is absent without required functionality removed> |
+| 1 | <Pass | Warning | Fail | N/A | Not assessed> | <...> | <same | better | Pass to Warning | Pass to Fail | Warning to Fail | assessed to Not assessed | became N/A (evidenced) | became N/A (unevidenced)> | <...> | <for N/A: the audit's evidence that the trigger is absent without required functionality removed> |
 
-Criterion 3 per brief and builder, combining this section with sections 5 and 7 for the same output: <met | not met: law rows ... / overflow cells ... / contrast pairs below threshold ... | inconclusive: task n unknown / source-only audit / sweep cells missing ... / contrast pairs unverified ...>.
+Criterion 3 per brief and builder, by the rules in `judge.md` section 4, combining this section with sections 5 and 7 for the same output:
+- Tasks: <all three evidenced | task n unknown: inconclusive>
+- Task-critical Fail in C: <none | law row n: not met>
+- Pass or Warning regressions (Pass to Warning, Pass to Fail, Warning to Fail): <none | rows ...: not met>
+- Assessed in B, Not assessed in C: <none | rows ...: not met>
+- N/A transitions: <none | rows ... evidenced | rows ... unevidenced: not met>
+- Overflow cells (section 7): <all expected cells measured at 0 | cells ... overflow: not met | cells ... missing: inconclusive>
+- Contrast pairs (section 5): <all verified, none below threshold | pairs ... below: not met | pairs ... unverified: inconclusive>
+- Result: <met | not met | inconclusive>
 
 ## 7. Coverage matrix
 One table per output. Cells are `measured`, `screenshot only`, `source only` or `no evidence (reason)`.
@@ -100,5 +108,5 @@ List every build, vote, count, audit or cell that is missing, with its reason. "
 ## 10. Reading the criteria
 - Criterion 1 (pair-majority win rate): <met | not met | inconclusive>, from section 4.
 - Criterion 2 (mechanical tells): <met | not met | not applicable>, from section 5.
-- Criterion 3 (usability non-regression): <met | not met | inconclusive>, from section 6 read row by row, plus section 7 (every expected sweep cell measured with `overflowX` 0) and section 5 (every contrast pair verified). Observed overflow or a pair below threshold: not met. A missing cell, an unverified pair or an unknown task: inconclusive.
+- Criterion 3 (usability non-regression): <met | not met | inconclusive>, from the per-brief results in section 6, which read the law rows (Pass and Warning regressions, assessed-to-Not-assessed, unevidenced N/A transitions, task-critical Fails), the three tasks, section 7 (every expected sweep cell measured with `overflowX` 0) and section 5 (every contrast pair verified). Any unknown task, missing cell or unverified pair: inconclusive. Any regression, overflow or failing pair: not met.
 - Human calibration: <n of 5 agree | not run>.

@@ -121,12 +121,18 @@ The mechanical reviewer's `remote-refs.txt` explains blocked requests after the 
 The ordinary read-only handoff is unchanged for every audit that is not a benchmark output.
 
 ## 9. State resets
-Between the walk-through of one task and the next, and between outputs:
-1. Stop the server.
-2. Clear the browser's storage for the origin (local storage, session storage, cookies, IndexedDB) and close the tab.
-3. Start the server again on the same port and open the page in a new tab.
+Every output shares the one origin, so anything a page leaves in the browser could be served to the next output's audit. Two levels of reset:
 
-A page whose state survives this (for example because the builder wrote to a file) is recorded, and its later tasks are walked through from the surviving state with that noted in the task evidence.
+**Between outputs: a fresh isolated browser context.** The context used for one output is closed and discarded, and the next output gets a new context with the section 8 interception installed before its first navigation. Nothing is carried over: no cookies, storage, caches, service-worker registrations or permissions.
+
+**Between the walk-through of one task and the next, within an output:**
+1. Stop the server.
+2. In the page's origin: unregister every service worker, delete every Cache Storage cache, and clear the HTTP cache, local storage, session storage, cookies and IndexedDB. Close the tab.
+3. Confirm the request interception of section 8 is still installed on the context (or reinstall it) before any navigation.
+4. Start the server again on the same port and open `http://localhost:4181/` in a new tab.
+5. Check that the page is at its initial state. State that survives the reset without an explanation the run can verify (for example a cart that is still full, or a confirmation still showing) makes that output's remaining evidence **invalid**: the walk-throughs are marked unavailable with the reason, the output is listed under not run, and the audit does not continue from the surviving state. A page that persists state by design in a way the brief requires is not an explanation; the briefs require none.
+
+`requests.json` (section 7) covers the reset navigation too, so a request that slips out while interception is being reinstalled is seen.
 
 ## 10. Run folder
 Outside the checkout, `runs/<date>-<label>/`:

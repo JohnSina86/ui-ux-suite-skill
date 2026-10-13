@@ -21,9 +21,9 @@ Three roles, each with different inputs. Mixing their inputs is the main way a b
 All three are run by the provider that did not build the outputs. A new session or CLI call for every call; nothing is reused between pairs.
 
 ## 2. Preference judge
-**Inputs, and only these:** the screenshots of both outputs (375 and 1440 at rest, each overlay at 375) and their task evidence (the three tasks with the end-state screenshot of each, or the note that it could not be completed). The two outputs are called **Output 1** and **Output 2**; which condition is 1 is drawn at random per perspective and recorded in the run folder, never in the prompt.
+**Inputs, and only these:** the screenshots of both outputs (375 and 1440 at rest, each overlay at 375), their task evidence (the three tasks with the end-state screenshot of each, or the note that it could not be completed), and the brief itself: product, audience, the three tasks, the constraints and the content pack, pasted verbatim. The brief is the same for both outputs and names no condition, so it leaks nothing; without it a judge cannot tell whether the supplied copy survived or whether a placeholder was mandated. The two outputs are called **Output 1** and **Output 2**; which condition is 1 is drawn at random per perspective and recorded in the run folder, never in the prompt.
 
-**Never given:** source, probe JSON, the overflow sweep, the contrast ledger, file names that carry the condition, the build prompt, or any other judge's vote. Style role names, theme classes and spacing token names identify the condition, which is why source is excluded even in part.
+**Never given:** source, probe JSON, the overflow sweep, the contrast ledger, file names that carry the condition, the build prompt, BUILD.md or any builder finding, the condition's skill list, or any other judge's vote. Style role names, theme classes and spacing token names identify the condition, which is why source is excluded even in part.
 
 **The echo rule.** Every vote must name **one concrete visual detail** from the renders before it picks: a colour, a word that appears on screen, a position, a size relation. A vote with no detail, or whose detail cannot be found in either render, is **discarded**, and that perspective is re-run once with a fresh call. If the re-run also fails, the perspective is missing and the pair is incomplete (section 5).
 
@@ -37,10 +37,10 @@ Each prompt starts with the same preamble and ends with the same instruction; on
 
 Preamble:
 ```text
-You are comparing two web pages built from the same brief. You see only screenshots: for each output, the page at phone width (375 px) and desktop width (1440 px), each overlay open at phone width, and the end state of three tasks, or a note that a task could not be completed. The brief's product, audience and three tasks are below. Judge only what the images show. Do not guess at code, performance or accessibility conformance.
+You are comparing two web pages built from the same brief. You see only screenshots: for each output, the page at phone width (375 px) and desktop width (1440 px), each overlay open at phone width, and the end state of three tasks, or a note that a task could not be completed. The brief both pages were built from is below: product, audience, the three tasks, the constraints and the content pack. Both builders had the same brief. Judge only what the images show against it. Do not guess at code, performance or accessibility conformance. The brief requires images to be drawn placeholders with a caption or label instead of photographs: a placeholder is never a fault in itself; judge only whether it is placed, sized and labelled as the brief describes.
 
 Brief:
-[product, audience and the three tasks, pasted from the brief; nothing else from it]
+[product, audience, the three tasks, constraints and content pack, pasted verbatim from the brief; nothing else]
 ```
 Closing instruction:
 ```text
@@ -49,7 +49,7 @@ First, name one concrete visual detail you can see in the images (a colour, a wo
 
 **Art director.** Middle:
 ```text
-Question: which output is better designed? Consider hierarchy (does the eye land where it should), typography (scale, pairing, measure), imagery (does it belong, is it placeholder-like), and rhythm (do sections differ where they should and repeat where they should). Prefer the page that looks made for this brief over the page that could be any site.
+Question: which output is better designed? Consider hierarchy (does the eye land where it should), typography (scale, pairing, measure), imagery (is each mandated placeholder placed, sized, cropped and labelled as the brief describes, and does it belong where it sits; being a placeholder is not a fault), and rhythm (do sections differ where they should and repeat where they should). Prefer the page that looks made for this brief over the page that could be any site.
 ```
 
 **First-time visitor.** Middle:
@@ -59,7 +59,7 @@ Question: as someone who has never seen either page, on which output could you c
 
 **Copy editor.** Middle:
 ```text
-Question: which output's words are more specific to this product and audience? Look for headlines that would fit any competitor, filler phrases, placeholder text, repeated adjectives, calls to action without an object, and whether the brief's own copy survived. Prefer the page you could not move to another product unchanged.
+Question: which output's words are more specific to this product and audience? Compare the visible words with the content pack in the brief: did the supplied copy survive, was anything invented beyond it, and are the required labels, errors and confirmations present. Look for headlines that would fit any competitor, filler phrases, dummy text such as lorem ipsum or "your text here" (a mandated image placeholder's caption is not dummy text), repeated adjectives, and calls to action without an object. Prefer the page you could not move to another product unchanged.
 ```
 
 **Usability reviewer.** Middle:
@@ -97,9 +97,11 @@ The audit delivers the full `ux-laws` contract: one 20-row table per template, e
 **Evidence source.** When the auditing provider has a browser the benchmark can configure, the evidence source is the live page. When it does not (Codex in this toolchain has no browser that `codex exec` can drive, unless a browser MCP is configured for it and verified in the run), the audit is **source-only**: it can still show a task-critical Fail, but it cannot show that a task was completed, so criterion 3 is **inconclusive** for that round until a browser-capable fresh session of the same provider repeats the audit on a live render. Inconclusive is recorded, never rounded up.
 
 Criterion 3 reads these audits row by row per law, per brief and per builder, as the plan's acceptance criteria say, **together with two mechanical sections for the same output** (section 3): the overflow sweep and the contrast pairs. The decision for one brief and builder:
-- **Not met** when any task-critical Fail, any Pass-to-worse law row, any observed overflow cell (an expected cell of the 320 to 430 px sweep, at rest or with an overlay open, with `overflowX` above 0), or any contrast pair below threshold is present.
-- **Inconclusive** when anything needed is missing: a task whose completion is unknown, a law assessed in B and Not assessed in C, a sweep cell not measured, a contrast pair with no verification evidence (neither in the ledger nor recomputed with both luminances), or a source-only audit.
-- **Met** only when every part above is present and passes.
+- **Inconclusive** when any of the three tasks lacks completion evidence in C's audit (a completed walk-through on the live page, or source that proves the path): an unknown task never passes. Also inconclusive when a sweep cell is not measured, a contrast pair has no verification evidence (neither in the ledger nor recomputed with both luminances), or the audit is source-only for a law that needs the live page.
+- **Not met** when any of these is present in C: a task-critical Fail; a law that was Pass or Warning in B and is worse in C (Pass to Warning, Pass to Fail, or Warning to Fail); a law that was assessed in B (Pass, Warning or Fail) and is Not assessed in C, which is a regression of evidence and fails; a law that became N/A in C without the audit's evidence that its trigger is absent and that no functionality the brief requires was removed; an observed overflow cell (an expected cell of the 320 to 430 px sweep, at rest or with an overlay open, with `overflowX` above 0); or a contrast pair below threshold.
+- **Met** only when every part above is present and passes: all three tasks evidenced, no task-critical Fail, no Pass or Warning regression, no assessed-to-Not-assessed row, every N/A transition evidenced, every expected sweep cell measured at zero, every contrast pair verified and above threshold.
+
+Inconclusive is checked first; a row that is both missing and failing is reported with both facts, and the criterion is not met.
 
 The percentage score is reported and does not control.
 
