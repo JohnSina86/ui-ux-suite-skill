@@ -81,10 +81,14 @@ references/independent-audit.md the fresh-context audit handoff and prompt
 references/guided-start.md    plain-language intake, the four levels, next-step prompts
 references/plain-language.md  the plain-words block and everyday wording
 evals/                        9 functional evals and 24 trigger queries (data only)
+bench/                        the cross-provider blind benchmark: briefs, protocol, judge roles, committed results (start at bench/protocol.md)
 RELEASING.md                  the release checklist
 ```
 
 ## Changelog
+- **Unreleased**: the benchmark (`bench/`).
+  - Four briefs with fixed content packs (`briefs/`; `dreammadestudio.md` is a stub until the user supplies the page), the build and evidence protocol (`protocol.md`: conditions A, B and C, the cross-provider build matrix, outputs stored outside the checkout, a static non-proxying server, the browser-enforced origin allowlist and the scoped permissions override), the three judge roles (`judge.md`: blinded preference judges in four perspectives with the echo rule, the unblinded mechanical reviewer producing counts only, and the independent audit pass through `references/independent-audit.md`), and the results layout with a summary template (`results/`).
+  - Results are AI-judged and cross-provider. The first run is a one-brief smoke test; it satisfies no criterion. No skill rule changes, and the companion pins are unchanged.
 - **v1.3.0**: composition moves.
   - Stage 2 picks `ui-styles` composition moves (depth planes, signal colour, scale contrast) when the UI feels flat, looks default, or users can't tell what to tap. Signal colour is the default in a new build. Stage 3 builds them, the build manifest records them, and stage 4 lists the laws they touch as places to look, never as findings.
   - Three conflict cases: a decorative accent under signal colour, a plane overlapping a control, and scale contrast against the reading floors.
