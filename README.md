@@ -4,7 +4,7 @@ An agent skill that runs a complete UI/UX job in order: **brief, style choice, b
 
 It is a conductor, not a merged copy. It owns the order of work, the handoffs and the report. The style tokens and CSS rules stay in [`ui-styles`](https://github.com/JohnSina86/ui-styles-skill), the laws and the audit rubric stay in [`ux-laws`](https://github.com/JohnSina86/ux-laws-skill), and the rules for the words on the screen stay in [`ui-copy`](https://github.com/JohnSina86/ui-copy-skill). Keeping one copy of each means they can't drift apart.
 
-> **Current release: `v1.2.0`.** To confirm an install, run `git -C <install dir> describe --tags`, which should print `v1.2.0`. The install lines below pin the three companion skills: `ui-styles` `v1.8.0`, `ux-laws` `v1.3.0` and `ui-copy` `v1.0.0`.
+> **Current release: `v1.4.0`.** To confirm an install, run `git -C <install dir> describe --tags`, which should print `v1.4.0`. The install lines below pin the three companion skills: `ui-styles` `v1.8.0`, `ux-laws` `v1.3.0` and `ui-copy` `v1.0.0`.
 
 ## No developer? Start here
 You don't need to know any technical words. Install the four skills, then say what you want in your own words, for example: *"I run a bakery and need a page that looks professional so people can order."*
