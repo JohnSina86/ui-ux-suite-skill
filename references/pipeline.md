@@ -123,7 +123,7 @@ On a live page, **measure before grading**: run `ux-laws` `references/page-probe
 ## Stage 5: Fix
 **Input:** the Fail and Warning rows, and the unscored findings.
 
-**Action:** turn each into a concrete edit. Order them by severity, and fix in one batch. For each edit, apply [conflict-rules.md](conflict-rules.md) if it touches colour, size or the style's look. Recompute any changed colour pair with `ui-styles` `references/contrast-check.md` and update its ledger row or note. Then re-audit the changed rows **once**, with fresh evidence at every occurrence the finding cited, of a kind that can show it (`ux-laws` `references/multi-surface.md` §4). Geometry and overflow need a new live measurement, or a labelled static estimate when no page can be opened. A defect the source proves, such as an untyped Cancel button, can close on the corrected source.
+**Action:** turn each into a concrete edit. Order them by severity, and fix in one batch. For each edit, apply [conflict-rules.md](conflict-rules.md) if it touches colour, size or the style's look. Recompute any changed colour pair with `ui-styles` `references/contrast-check.md` and update its ledger row or note. Run the copy gate below on every string the fixes created or changed, and apply its corrections inside the same batch, so the re-audit measures the final strings. Then re-audit the changed rows **once**, with fresh evidence at every occurrence the finding cited, of a kind that can show it (`ux-laws` `references/multi-surface.md` §4). Geometry and overflow need a new live measurement, or a labelled static estimate when no page can be opened. A defect the source proves, such as an untyped Cancel button, can close on the corrected source.
 
 ```markdown
 ### Fix log
@@ -135,7 +135,7 @@ On a live page, **measure before grading**: run `ux-laws` `references/page-probe
 
 **Re-audit output is row changes, not a new score.** The report's only headline score is the stage-4 score. A post-fix score may appear only labelled "indicative, edits only", never as a headline. A finding closes only with new evidence, of a kind that can show it, at every occurrence it cited; an occurrence that wasn't checked again stays open.
 
-**Copy gate.** Before the fix log closes, run `ui-copy` again on every string the fixes created or changed (error messages, confirmations, control labels, alt text). This applies in Polish mode too, which otherwise never reaches stage 3. Supplied copy is preserved: a proposed change to it goes through the report's spec fidelity and owner decisions sections and is never applied silently. Record the strings checked and the detector count in the fix log.
+**Copy gate.** Run `ui-copy` again on every string the fixes created or changed (error messages, confirmations, control labels, alt text), before the re-audit and before the fix log closes. This applies in Polish mode too, which otherwise never reaches stage 3. Supplied copy is preserved: a proposed change to it goes through the report's spec fidelity and owner decisions sections and is never applied silently. Record the strings checked and the detector count in the fix log. Geometry, overflow and any other check a corrected string can change use the final string, and stay open if they can't be re-measured.
 
 **Gate:** every Fail and Warning, and every unscored finding, is fixed with re-check evidence or deferred with a reason, and the copy gate is done. If any remain after the one re-audit, they go into the report as open risks. Don't loop again.
 
