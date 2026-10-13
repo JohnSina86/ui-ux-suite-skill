@@ -105,6 +105,20 @@
         "Grades from source code only, names that as the evidence, and marks rendering-dependent and usage-based laws Not assessed with the evidence needed",
         "Makes at most one fix batch (it may add the missing button, since the user's document asks for it) and reports the re-audit as row changes"
       ]
+    },
+    {
+      "id": 9,
+      "prompt": "Build the menu screen for my coffee shop's ordering app and check it works well. Last time it came out flat and generic, and testers didn't know what to tap. Mobile first. No existing design system.",
+      "expected_output": "Full mode: a Brief, a Style decision that names composition moves tied to the stated symptoms (signal colour at least, scale contrast or depth planes where they fit), a build that applies them within the ui-styles contracts, a ux-laws audit that treats the moves as places to look rather than findings, and one report.",
+      "files": [],
+      "expectations": [
+        "States Full mode and runs the stages in order with their gates",
+        "The Style decision block lists composition moves and ties each to a symptom from the request (flat, generic, unclear what to tap)",
+        "Signal colour is applied: the accent colour appears only on interactive elements and their states",
+        "Does not apply depth planes or scale contrast in a way that overlaps controls or puts reading text under 16px",
+        "The audit does not grade a move's presence or absence as a law row, and labels itself a self-audit unless it used an independent context",
+        "Makes no WCAG conformance claim"
+      ]
     }
   ]
 }

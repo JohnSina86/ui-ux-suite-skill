@@ -48,14 +48,17 @@ The plan becomes the coverage matrix in the report. Each cell is later marked me
 - Risk and its `Requires` rule: [from the style index]
 - Existing system handling: [accent layer on <tokens> | new base]
 - Match status: [indexed | no product row, indexed style fits | no verified match, unverified fallback]
+- Composition moves: [depth planes | signal colour | scale contrast | none], each with the symptom it answers, per the `ui-styles` `references/composition.md` table
 ```
+
+Pick composition moves when the brief or the request says the UI feels flat, looks default, or users can't tell what to tap. In a Full or Design build with no existing design system, signal colour is the default. In an existing design system, list the moves as a proposal for the user.
 
 **Gate:** the block is written. A style you *recommend* is never one listed under Avoid for this product. A style the user *named* stands: apply its `Requires` rule, and disclose any product-fit Avoid or risk note in the block.
 
 ## Stage 3: Build
 **Input:** the Style decision block.
 
-**Action:** follow `ui-styles` sections 3 to 7: paste the style's token block, build components from the roles, and apply the guardrails. Read its resources reference only if the user asked for ready-made components, icons, fonts or charts, and follow its rules.
+**Action:** follow `ui-styles` sections 3 to 7: paste the style's token block, build components from the roles, and apply the guardrails and any composition moves the Style decision names. Read its resources reference only if the user asked for ready-made components, icons, fonts or charts, and follow its rules.
 
 ```markdown
 ### Build manifest
@@ -63,6 +66,7 @@ The plan becomes the coverage matrix in the report. Each cell is later marked me
 - Tokens: [file and class, or the existing tokens the style was mapped onto]. Say "unchanged" only if the pasted block is identical to the source, and list every edit otherwise (font stacks count).
 - Colour pairs used: [ledger row ids, plus any pair you recomputed, with its two luminances and its ratio]
 - Dependencies added: [none, or name and the user's agreement]. Write "none" only after searching every delivered file, demo pages included, for `http://` and `https://`.
+- Composition moves applied: [moves, and their `composition.md` checks done or left open as "needs a render"; or "none"]
 - Rendered and checked in a browser: [yes, with the tool named | no]. Never "yes" for a code or DOM read.
 ```
 
@@ -76,7 +80,7 @@ The plan becomes the coverage matrix in the report. Each cell is later marked me
 - Source code only: grade what the code shows, and mark every law that needs live behaviour or usage data **Not assessed**, naming the evidence needed.
 - Screenshot or description only: say so, and grade only what that can show.
 
-Use the `ux-laws` interop table as a starting point for what to inspect, never as a finding. State plainly if this is a **self-audit** of something you just built.
+Use the `ux-laws` interop table as a starting point for what to inspect, never as a finding. Composition moves add places to look, not findings: signal colour and scale contrast touch law 7 (one distinct primary) and law 13 (only interactive things look interactive); depth planes touch law 2 (overlapped hit areas) and law 12 (structure read through the overlap). A move's absence is never a finding. State plainly if this is a **self-audit** of something you just built.
 
 On a live page, **measure before grading**: run `ux-laws` `references/page-probe.md` on every covered page and viewport, and apply its false-positive rules. In a site sweep, classify, combine and close findings per `ux-laws` `references/multi-surface.md`: one 20-row table per template, every Fail or Warning citing its page and viewport, gaps listed, and no site-wide score.
 
