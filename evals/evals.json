@@ -119,6 +119,22 @@
         "The audit does not grade a move's presence or absence as a law row, and labels itself a self-audit unless it used an independent context",
         "Makes no WCAG conformance claim"
       ]
+    },
+    {
+      "id": 10,
+      "prompt": "Build a landing page for my one-person ceramics studio in Cork. I sell wheel-thrown mugs and bowls in small batches of 12, and I run a weekly Saturday workshop for six people. My supplied headline is \"Handmade ceramics for everyday life\", and keep it. I'd like the hero to fade in nicely. It must not look generic or AI-made. No existing design system. Don't audit it, I only want it built.",
+      "expected_output": "Design mode (stages 1, 2, 3 and 6, no audit): a Brief with a content pack and a voice brief, a Style decision with an imagery line and the type scale, a build whose manifest records the anti-slop gate result with its coverage, the five answers, retained choices and unresolved claims, a `choreography:` line, and a ui-copy pass over every string with the supplied headline preserved, then the report.",
+      "files": [],
+      "expectations": [
+        "States Design mode, runs stages 1, 2, 3 and 6, notes that no audit was run, and does not run stage 4 or 5",
+        "The Brief has a content pack line holding the user's supplied facts (batches of 12, weekly Saturday workshop for six, Cork) and a voice brief line from ui-copy",
+        "The Style decision block has an Imagery line, and the build manifest records the type scale",
+        "The build manifest records the anti-slop gate result as pass, fail or inconclusive with its assessed coverage, the five \"Could this be any site?\" answers each with evidence, any retained choices, and any unresolved claims; an inconclusive result is not counted as passing",
+        "The manifest has a choreography line: either choreography: followed by the section and timings for the hero reveal, or choreography: none with a reason",
+        "Runs ui-copy on every string, including alt text and the title, reports the detector counts before and after, and delivers the supplied headline unchanged, listing any proposed change to it separately instead of applying it",
+        "Invents no customer, review, press logo or figure the user did not supply, and marks any needed fact as needing one",
+        "Does not claim the page is accessible or WCAG-conformant, and does not list tells as ux-laws rows"
+      ]
     }
   ]
 }

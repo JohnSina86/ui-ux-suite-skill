@@ -1,10 +1,10 @@
-# Installs the two skills that ui-ux-suite depends on (ui-styles and ux-laws)
+# Installs the three skills that ui-ux-suite depends on (ui-styles, ux-laws and ui-copy)
 # next to it, in the same skills folder. Safe to run again: it updates them.
 #
 #   Set-Location "$HOME\.claude\skills"
 #   git clone https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
 #   .\ui-ux-suite\install.ps1                  # newest versions (main)
-#   .\ui-ux-suite\install.ps1 -Ref v1.2.1      # a tag or branch, for the two companions
+#   .\ui-ux-suite\install.ps1 -Ref main        # a branch or tag that exists in all three companions
 #
 # This script is for people, not for the agent. The skill never runs it.
 param([string]$Ref = "main")
@@ -44,11 +44,12 @@ function Install-One($Name, $Url) {
 
 Install-One "ui-styles" "https://github.com/JohnSina86/ui-styles-skill.git"
 Install-One "ux-laws"   "https://github.com/JohnSina86/ux-laws-skill.git"
+Install-One "ui-copy"   "https://github.com/JohnSina86/ui-copy-skill.git"
 
 Write-Host ""
 Write-Host "Installed in: $Parent"
 $AllOk = $true
-foreach ($Name in "ui-styles", "ux-laws", "ui-ux-suite") {
+foreach ($Name in "ui-styles", "ux-laws", "ui-copy", "ui-ux-suite") {
   $Dir = Join-Path $Parent $Name
   if (Test-Path (Join-Path $Dir "SKILL.md")) {
     $Ver = & git -C $Dir describe --tags --always 2>$null

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Installs the two skills that ui-ux-suite depends on (ui-styles and ux-laws)
+# Installs the three skills that ui-ux-suite depends on (ui-styles, ux-laws and ui-copy)
 # next to it, in the same skills folder. Safe to run again: it updates them.
 #
 #   cd ~/.claude/skills
 #   git clone https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
 #   ./ui-ux-suite/install.sh            # newest versions (main)
-#   ./ui-ux-suite/install.sh --ref v1.2.1   # a tag or branch, for the two companions
+#   ./ui-ux-suite/install.sh --ref main     # a branch or tag that exists in all three companions
 #
 # This script is for people, not for the agent. The skill never runs it.
 set -euo pipefail
@@ -44,11 +44,12 @@ install_one() {
 
 install_one ui-styles https://github.com/JohnSina86/ui-styles-skill.git
 install_one ux-laws   https://github.com/JohnSina86/ux-laws-skill.git
+install_one ui-copy   https://github.com/JohnSina86/ui-copy-skill.git
 
 echo
 echo "Installed in: $PARENT"
 ok=1
-for name in ui-styles ux-laws ui-ux-suite; do
+for name in ui-styles ux-laws ui-copy ui-ux-suite; do
   if [ -f "$PARENT/$name/SKILL.md" ]; then
     echo "  OK  $name  ($(git -C "$PARENT/$name" describe --tags --always 2>/dev/null || echo unknown))"
   else
