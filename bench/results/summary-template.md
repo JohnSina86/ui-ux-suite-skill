@@ -58,6 +58,8 @@ Rubric version: <none | version>. Counting unit: <per the rubric | n/a>.
 
 Unverified contrast pairs are total minus ledger minus recomputed. Expected overflow cells are four widths at rest plus four per overlay. Both feed criterion 3.
 
+Rubric exceptions applied, each with its brief reference (`mechanical/<id>.md`): <list | none>. Rubric rows unassessable (brief or content pack missing from the handoff): <rows | none>. An output with unassessable rows cannot meet criterion 2.
+
 Criterion 2: C has zero high and at most two medium tells per page. <met | not met | not applicable: no rubric>.
 
 ## 6. Independent audits

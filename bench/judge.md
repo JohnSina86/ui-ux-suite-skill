@@ -68,17 +68,17 @@ Question: which output is more usable, judged as far as a render can show? Apply
 ```
 
 ## 3. Mechanical reviewer
-Not blinded. Gets, per output: the delivered source, `probe-*.json`, `sweep.json`, `remote-refs.txt`, `requests.json`, and the contrast ledger from the build if the builder produced one. Produces **counts only**, no opinion, in `mechanical/<id>.md`:
+Not blinded. Gets, per output: the delivered source, `probe-*.json`, `sweep.json`, `remote-refs.txt`, `requests.json`, the contrast ledger from the build if the builder produced one, and **the brief verbatim**, content pack and constraints included. The brief is needed because the anti-slop rubric's applicability exceptions depend on it: a testimonial the content pack supplies, a placeholder the brief mandates, or a layout the brief asks for is not a tell. Produces **counts only**, no opinion, in `mechanical/<id>.md`:
 
 | Count | Rule |
 | :--- | :--- |
-| Tells, by severity | the frozen W1 rubric from `ui-styles`, by its version, under its counting unit (pattern tells once per page, element tells once per occurrence). Before the rubric exists: `rubric: none; tells: not counted` |
+| Tells, by severity | the frozen W1 rubric from `ui-styles`, by its version, under its counting unit (pattern tells once per page, element tells once per occurrence). Every applicability exception the reviewer applies is recorded with its **brief reference**: the brief file and the line or content-pack item that mandates or supplies the element (for example `cafe-ordering.md, Image descriptions: item images`). An exception with no brief reference is not applied and the tell is counted. When the brief or its content pack is missing from the handoff, every rubric row that carries an applicability exception is marked **unassessable** and listed by row, not counted as zero. Before the rubric exists: `rubric: none; tells: not counted` |
 | Contrast pairs | every text and control colour pair in the delivered CSS: how many are in the ledger, how many were recomputed, and how many fall below the thresholds in `ui-styles` `references/contrast-check.md`. A recomputed pair shows both luminances, as `SKILL.md` section 4 requires; a ratio without them is not counted as verified |
 | Overflow cells | from `sweep.json`: cells measured, cells with `overflowX: 0`, cells with overflow (listed by width and state) |
 | Blocked requests | from `requests.json`: how many, to which origins |
 | Remote references | from `remote-refs.txt`: how many, which files |
 
-The reviewer never scores, ranks or comments. The summary copies the counts.
+The reviewer never scores, ranks or comments. The summary copies the counts, the exceptions with their brief references, and any unassessable rows.
 
 ## 4. Independent audit pass
 One per final output (every A, B and C build), by the non-building provider, in a fresh session, using the suite's existing handoff in `references/independent-audit.md` **unchanged** except for the benchmark substitutions and the addition below. The session gets the brief verbatim (product, audience, the three tasks in priority order, constraints), the served URL or the source folder, the viewports, and the coverage plan. It never gets the builder's BUILD.md, any judge's vote, or the mechanical counts.
