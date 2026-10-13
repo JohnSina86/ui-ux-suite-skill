@@ -48,7 +48,7 @@ Plumbing check instead of a vote: one headless screenshot of the allowlist test 
 ## 5. Mechanical counts
 Rubric version: none. Counting unit: n/a. No output to count.
 
-| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (ledger / recomputed / below threshold) | Overflow cells (measured / zero / overflow) | Blocked requests | Remote refs |
+| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (total / ledger / recomputed / below threshold) | Overflow cells (expected / measured / zero / overflow) | Blocked requests | Remote refs |
 | :--- | :--- | :-: | :-: | :-: | :--- | :--- | :-: | :-: |
 | none | saas-landing | A, B | not counted | not counted | missing: not built | missing: not built | missing | missing |
 
@@ -65,7 +65,7 @@ None. Had an output existed, the Codex audit would have been source-only: `codex
 Not applicable: no C, no audits.
 
 ## 7. Coverage matrix
-No output. The screenshot method was checked on the test page only: headless Chrome 154 produced a 375×812 PNG and a 1440×900 PNG from `http://127.0.0.1:4181/` (`evidence/plumbing/shot-375.png`, `shot-1440.png`). Headless Edge also wrote a file, but asynchronously, after the command had returned; Chrome wrote it before returning, so Chrome is the one named in the protocol.
+No output. A separate headless Chrome 154 produced a 375×812 PNG and a 1440×900 PNG of the test page (`evidence/plumbing/shot-375.png`, `shot-1440.png`); headless Edge wrote its file asynchronously. Neither is a protocol method: a second browser process runs outside the isolated context with no allowlist and cannot show in-memory state, so the protocol requires screenshots exported from the auditor's isolated tab, which the browser pane cannot do. These two files only show that the Codex judge call could be fed a real PNG.
 
 | Output id | 375×812 | 768×1024 | 1440×900 | 320 rest | 360 rest | 390 rest | 430 rest | 320 to 430 with each overlay open |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -96,5 +96,5 @@ Codex `exec` reports one `tokens used` figure, not input and output separately; 
 ## 10. Reading the criteria
 - Criterion 1 (pair-majority win rate): inconclusive, from section 4.
 - Criterion 2 (mechanical tells): not applicable, from section 5.
-- Criterion 3 (usability non-regression): inconclusive, from section 6 (no audit; Codex source-only; override withheld).
+- Criterion 3 (usability non-regression): inconclusive, from sections 5, 6 and 7 (no audit, no sweep cells, no contrast pairs; Codex source-only; override withheld).
 - Human calibration: not run.

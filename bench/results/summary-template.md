@@ -18,7 +18,7 @@ Copy this file to `<date>-<label>/summary.md` and fill every section. Keep a sec
 
 ## 1. Scope
 - Briefs: <list; say "dreammadestudio: not supplied" when it is>
-- Conditions: <A, B | A, B, C> with tags: B = <tags>, C = <tags or "none">
+- Conditions: <A, B | A, B, C>. Condition manifest (`conditions.json`): B = <the three repos and pinned tags>; C = <every repo of the set under test with its tag, including ui-copy from W5 onwards | "none">
 - Rounds: <which builder built which conditions>
 - Kind of run: <baseline | W6 re-measure | smoke test (proves the protocol only; satisfies no criterion)>
 
@@ -52,9 +52,11 @@ Gates from the plan: C wins at least 80% of decided pairs against A and at least
 ## 5. Mechanical counts
 Rubric version: <none | version>. Counting unit: <per the rubric | n/a>.
 
-| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (ledger / recomputed / below threshold) | Overflow cells (measured / zero / overflow) | Blocked requests | Remote refs |
+| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (total / ledger / recomputed / below threshold) | Overflow cells (expected / measured / zero / overflow) | Blocked requests | Remote refs |
 | :--- | :--- | :-: | :-: | :-: | :--- | :--- | :-: | :-: |
-| <id> | ... | ... | <n | not counted> | ... | <a / b / c> | <a / b / c> | <n> | <n> |
+| <id> | ... | ... | <n | not counted> | ... | <t / a / b / c> | <e / a / b / c> | <n> | <n> |
+
+Unverified contrast pairs are total minus ledger minus recomputed. Expected overflow cells are four widths at rest plus four per overlay. Both feed criterion 3.
 
 Criterion 2: C has zero high and at most two medium tells per page. <met | not met | not applicable: no rubric>.
 
@@ -72,7 +74,7 @@ One table per brief and builder. Rows are the 20 law rows as the `ux-laws` repor
 | :-: | :--- | :--- | :--- | :--- | :--- |
 | 1 | <Pass | Warning | Fail | N/A | Not assessed> | <...> | <same | better | worse | assessed to Not assessed | became N/A> | <...> | <for N/A: the evidence that the trigger is absent without required functionality removed> |
 
-Criterion 3 per brief and builder: <met | not met: rows ... | inconclusive: task n unknown | inconclusive: source-only audit>.
+Criterion 3 per brief and builder, combining this section with sections 5 and 7 for the same output: <met | not met: law rows ... / overflow cells ... / contrast pairs below threshold ... | inconclusive: task n unknown / source-only audit / sweep cells missing ... / contrast pairs unverified ...>.
 
 ## 7. Coverage matrix
 One table per output. Cells are `measured`, `screenshot only`, `source only` or `no evidence (reason)`.
@@ -98,5 +100,5 @@ List every build, vote, count, audit or cell that is missing, with its reason. "
 ## 10. Reading the criteria
 - Criterion 1 (pair-majority win rate): <met | not met | inconclusive>, from section 4.
 - Criterion 2 (mechanical tells): <met | not met | not applicable>, from section 5.
-- Criterion 3 (usability non-regression): <met | not met | inconclusive>, from section 6, read row by row.
+- Criterion 3 (usability non-regression): <met | not met | inconclusive>, from section 6 read row by row, plus section 7 (every expected sweep cell measured with `overflowX` 0) and section 5 (every contrast pair verified). Observed overflow or a pair below threshold: not met. A missing cell, an unverified pair or an unknown task: inconclusive.
 - Human calibration: <n of 5 agree | not run>.

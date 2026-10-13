@@ -22,7 +22,7 @@ Each brief is built under up to three conditions, each in a **fresh session** th
 | :-: | :--- | :--- |
 | **A** | none | baseline and every later run |
 | **B** | the pinned current companion tags: `ui-styles` v1.4.0, `ux-laws` v1.3.0, `ui-ux-suite` v1.3.0, and nothing else | baseline and every later run |
-| **C** | the tags under test, named in the run's summary | W6 onwards |
+| **C** | the skills of the set under test, each at the tag under test, as the run's **condition manifest** lists them (`conditions.json`, section 3): `ui-styles`, `ux-laws`, `ui-ux-suite`, and `ui-copy` from W5 onwards, and nothing else | W6 onwards |
 
 "Nothing else" is literal. A session that lists any other skill is not condition B, and a session that lists any skill at all is not condition A. Section 3 says how this is checked.
 
@@ -45,15 +45,18 @@ The condition is a property of the session, not of the prompt. Before any build 
 ```text
 Before you do anything else, and without using any tool: list every skill name available to you in this session, one per line, exactly as your instructions list them. If there are none, write NO SKILLS AVAILABLE. Then list every tool name you have.
 ```
-The reply is stored verbatim as `isolation/<output id>.txt` in the run folder. A build goes ahead only if the reply matches the condition: no skill names for A; exactly the three pinned companions for B; exactly the tags under test for C. Anything else stops that build, and the run records why.
+The reply is stored verbatim as `isolation/<output id>.txt` in the run folder. A build goes ahead only if the reply matches the condition: no skill names for A; exactly the three pinned companions for B; exactly the skills the condition manifest lists for C. Anything else stops that build, and the run records why.
+
+**Condition manifest.** Before any build, the run writes `conditions.json` in the run folder: for B, the three repos and their pinned tags (fixed: `ui-styles` v1.4.0, `ux-laws` v1.3.0, `ui-ux-suite` v1.3.0); for C, every repo of the set under test with its tag, which from W5 onwards includes `ui-copy`. That one list drives the clones, the `git describe` evidence and the match test on the isolation reply, so C can neither fail verification for a companion it was meant to have nor build without one. The manifest is copied into the summary's scope section.
 
 **Mechanisms, Claude Code as builder.** Two candidates, tried in this order; the run records which one was used and its verification output:
 - Condition A: the headless CLI with every skill disabled, `claude -p --disable-slash-commands`, run from an empty temporary folder with no project settings. The bundled CLI has no `--safe-mode` flag; `--disable-slash-commands` is the flag that disables skills.
-- Condition B and C: a temporary project folder whose `.claude/skills/` holds git checkouts of the three repos at the pinned tags, run with `claude -p --setting-sources project` from that folder so user-level skills are not loaded. The checkouts are made with `git clone --branch <tag> --depth 1` and `git describe --tags` is stored beside the isolation reply.
+- Condition B: a temporary project folder whose `.claude/skills/` holds git checkouts of exactly the three repos at the pinned tags, run with `claude -p --setting-sources project` from that folder so user-level skills are not loaded. The checkouts are made with `git clone --branch <tag> --depth 1` and `git describe --tags` is stored beside the isolation reply.
+- Condition C: the same mechanism, with the repos and tags taken from the condition manifest instead of the pinned list.
 - Not a mechanism: a subagent or a desktop side session. Both inherit every user-level skill (verified on 2026-10-13: a subagent listed all 44 user and bundled skills), so they cannot give A or B.
 - The headless CLI needs its own login. If it reports "Not logged in", no mechanism is available and the run stops before building, as this section requires.
 
-**Mechanisms, Codex as builder.** `codex exec` in an empty temporary folder, with Codex's own skills directory excluded for A and holding only the pinned checkouts for B. The exact flags are recorded in the run when a Codex round is first attempted; the verification message above applies unchanged, and no Codex build runs on an unverified condition.
+**Mechanisms, Codex as builder.** `codex exec` in an empty temporary folder, with Codex's own skills directory excluded for A, holding only the pinned checkouts for B, and holding the manifest's checkouts for C. The exact flags are recorded in the run when a Codex round is first attempted; the verification message above applies unchanged, and no Codex build runs on an unverified condition.
 
 **Never** build with an unverified condition. A run with no verified mechanism for a condition stops and says so; it does not fall back to "probably isolated".
 
@@ -80,21 +83,21 @@ One output at a time, on one fixed port:
 ```bash
 python -m http.server 4181 --directory "<root>/outputs/<id>"
 ```
-This is a static file server that does not proxy, forward, or rewrite. No dev server, no proxy configuration, no other port. (The suite's eval 7 uses 4180; the benchmark uses 4181 so the two never collide.) The server is stopped before the next output is served, and restarted whenever section 9 asks for a reset. An output that cannot be served this way (for example one that needs a build step despite the brief) is recorded as failed under section 2.
+This is a static file server that does not proxy, forward, or rewrite. No dev server, no proxy configuration, no other port. The page is opened only as `http://localhost:4181/`: that exact origin is the only allowlist entry, the only URL any tool opens and the origin the override line names. `http://127.0.0.1:4181` is a different origin to a browser and is never used. (The suite's eval 7 uses 4180; the benchmark uses 4181 so the two never collide.) The server is stopped before the next output is served, and restarted whenever section 9 asks for a reset. An output that cannot be served this way (for example one that needs a build step despite the brief) is recorded as failed under section 2.
 
 ## 7. Evidence per output
-Collected by the auditing provider in a browser the benchmark controls (section 8), stored under `runs/<date>-<label>/evidence/<id>/`. Every file below is required; a missing one is a coverage gap in the summary, never a guess.
+Collected by the auditing provider in **one isolated browser context** (section 8), with request and navigation blocking installed before the page loads, and stored under `runs/<date>-<label>/evidence/<id>/`. No second browser process is launched for any piece of evidence. Every file below is required; a missing one is a coverage gap in the summary, never a guess.
 
 | Evidence | How | Files |
 | :--- | :--- | :--- |
 | Probe | the `ux-laws` page probe (`references/page-probe.md`), once per viewport at 375×812, 768×1024 and 1440×900, at rest, after entrances or with reduced motion emulated | `probe-375.json`, `probe-768.json`, `probe-1440.json` |
 | Overflow sweep | `overflowX` from the same probe at 320, 360, 390 and 430 px wide (height 812), first at rest, then once per overlay with that overlay open: the menu, each modal or detail view, each banner. Each width × state is one cell of the coverage matrix | `sweep.json`: one row per cell with width, state, `overflowX`, and the `wide` list when it is not 0 |
-| Screenshots | 375 and 1440 at rest, scrolled to the top; then 375 with each overlay open. The browser pane returns screenshots inline, not as files, so the at-rest files come from headless Chrome: `chrome --headless --hide-scrollbars --window-size=375,812 --virtual-time-budget=4000 --screenshot=<file> http://127.0.0.1:4181/` (verified on Chrome 154: a 375×812 PNG). Overlay and task screenshots come from the same command with a `#` or query the page uses to open that state, or are marked missing | `shot-375.png`, `shot-1440.png`, `shot-375-<overlay>.png` |
-| Task evidence | each of the brief's three tasks walked through at 375 by the auditor (section 8), with a screenshot of its end state, or a note that it could not be completed and why | `task-1.png` or `task-1.md`, and so on |
-| Requests | every request the page made while the evidence above was collected, with its origin and whether it was blocked. Read from inside the page with `performance.getEntriesByType('resource')` after each state, because the browser pane's own request log lists only the document request (verified 2026-10-13) | `requests.json` |
+| Screenshots | 375 and 1440 at rest, scrolled to the top; then 375 with each overlay open. Every screenshot is exported to a file **from the auditor's own isolated tab**, after the interaction that produced the state and before any reset or reload, so it shows the state the auditor observed. An overlay, cart or confirmation is never recreated by loading a fresh page with a hash or query: in-memory state would be lost and the image would show something else. A browser that cannot export a file from the live tab, or cannot enforce the allowlist, gives no screenshots: capture is withheld, the cells are missing and the pair is incomplete | `shot-375.png`, `shot-1440.png`, `shot-375-<overlay>.png` |
+| Task evidence | each of the brief's three tasks walked through at 375 by the auditor (section 8), with a screenshot of its end state exported from the same tab before the state is reset, or a note that it could not be completed and why | `task-1.png` or `task-1.md`, and so on |
+| Requests | every request, navigation and redirect the browser's **enforcement layer** saw while the evidence above was collected, each marked allowed or blocked, with its origin and the state it happened in. Written from the interception events of the layer that enforces section 8, never from anything the page can see. `performance.getEntriesByType('resource')` is stored beside it as a supplementary diagnostic only: it omits fetches a policy rejected, iframes keep separate timelines, and a status of 0 can be an allowed opaque response, so it can never establish "no blocked request". If the enforcement log is missing for an output, that output's isolation result is **unavailable**: override withheld, walk-throughs unavailable. (The browser pane's own request log lists only the document request, verified 2026-10-13.) | `requests.json`, `resource-timing.json` |
 | Remote references | a search of the delivered files for `http://` and `https://`, listed | `remote-refs.txt` |
 
-Screenshots are the only thing the preference judge sees, so they are taken at the same device scale for every output in a run, with no browser chrome, and are named by id only. Nothing in a screenshot's file name or pixels may say which condition it came from; if a page prints its own condition (for example a theme class in visible text), the run records it as an unblinded pair and the pair is incomplete.
+Screenshots are the only thing the preference judge sees, so they are taken at the same device scale for every output in a run, with no browser chrome, and are named by id only. A separate headless Chrome (`--screenshot`) was tried on 2026-10-13: it writes files, but it runs outside the isolated context with no allowlist, so a page with an external script or fetch could reach other origins during capture, and a reloaded page cannot show an in-memory state. It is not used. Nothing in a screenshot's file name or pixels may say which condition it came from; if a page prints its own condition (for example a theme class in visible text), the run records it as an unblinded pair and the pair is incomplete.
 
 Overlays are found by reading the page: every control that opens a menu, dialog, drawer, detail view or banner. Each is listed in `sweep.json` by the control that opened it. "No overlays" is written only after that list is checked.
 
@@ -102,14 +105,15 @@ Overlays are found by reading the page: every control that opens a menu, dialog,
 The independent audit handoff (`references/independent-audit.md`) forbids submitting forms or changing data. A benchmark walk-through of a task such as placing an order needs exactly that, so the benchmark grants a **scoped override** under three conditions, all of which must hold:
 
 1. The output is a disposable local build served by section 6, with mock data from the brief's content pack, and nothing else.
-2. **Isolation is enforced in the browser, not inferred from the source.** The browser the auditor uses is configured, before the page is opened, to allow requests and navigations, including redirects, only to `http://localhost:4181` and to block everything else. Blocked requests are recorded in `requests.json`. "Enforced" means the browser refuses the request before it is sent; a log read afterwards is a diagnostic, not enforcement.
-3. The output's walk-throughs trigger no blocked request, and its server runs without a proxy.
+2. **Isolation is enforced in the browser, not inferred from the source.** The browser the auditor uses is configured, before the page is opened, to allow requests and navigations, including redirects, only to `http://localhost:4181` and to block everything else, and it logs every decision. The same context, with that blocking in place, is used for every piece of evidence in section 7, screenshots included. "Enforced" means the browser refuses the request before it is sent; a log read afterwards is a diagnostic, not enforcement. A candidate that meets this is a Chrome instance driven over the DevTools protocol with request interception that allows only the exact origin and records each allowed and blocked request; whatever is used is verified in the run, before any output is opened, with a test page that references other origins, and the enforcement log must show them blocked. The verification is stored in `isolation/browser.md`.
+3. The output's walk-throughs trigger no blocked request in the enforcement log (`requests.json`, section 7), and its server runs without a proxy.
 
 When all three hold, the auditor may, for this output only, submit forms, add items, and change the page's temporary state to complete the three tasks. The override is named in the stored audit (`Override: benchmark, isolated origin http://localhost:4181`).
 
 The override is **withheld** when:
 - the browser tool in use has no way to enforce an origin allowlist. The Claude Code browser pane is such a tool as of 2026-10-13: its per-site permission gates top-level navigation only, and a test page on the benchmark origin reached three other origins through a stylesheet, an image, a script and a fetch (the fetch failed on CORS, which proves the response arrived). The run records `allowlist: not enforced by <tool>` in `isolation/browser.md`, the auditor stays read-only, every task walk-through is marked **unavailable**, and criterion 3 is inconclusive for every output of that round;
 - a walk-through triggers a blocked request, or the page tries to leave the origin: the walk-throughs for that output are marked unavailable and the reason is stored under its id;
+- the enforcement log for an output is missing or incomplete: its isolation result is unavailable and it is treated as above;
 - the auditing provider has no browser at all (section 3 of [judge.md](judge.md)): the audit is source-only and says so.
 
 The mechanical reviewer's `remote-refs.txt` explains blocked requests after the fact. It never grants the override.
@@ -128,6 +132,7 @@ A page whose state survives this (for example because the builder wrote to a fil
 Outside the checkout, `runs/<date>-<label>/`:
 ```
 map.json                  id to brief, builder, condition, round
+conditions.json           the condition manifest: repos and tags for B (fixed) and C (the set under test)
 isolation/<id>.txt        the skill-listing reply from the build session
 isolation/<id>.tags.txt   git describe output for the checkouts (B and C)
 isolation/browser.md      which browser, whether the allowlist was enforced, how
