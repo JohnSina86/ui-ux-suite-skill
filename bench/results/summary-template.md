@@ -53,11 +53,11 @@ Gates from the plan: C wins at least 80% of decided pairs against A and at least
 ## 5. Mechanical counts
 Rubric version: <none | version>. Counting unit: <per the rubric | n/a>.
 
-| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (total = ledger-only + recomputed + unverified; below threshold) | Overflow cells (expected / measured / zero / overflow) | Blocked requests | Remote refs |
+| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (total = ledger-only + recomputed + unverified; decorative only; below requirement) | Overflow cells (expected / measured / zero / overflow) | Blocked requests | Remote refs |
 | :--- | :--- | :-: | :-: | :-: | :--- | :--- | :-: | :-: |
-| <id> | ... | ... | <n | not counted> | ... | <t = a + b + c; d> | <e / a / b / c> | <n> | <n> |
+| <id> | ... | ... | <n | not counted> | ... | <t = a + b + c; n decorative; d below> | <e / a / b / c> | <n> | <n> |
 
-Contrast buckets are disjoint (`judge.md` section 3): a pair is ledger-only, recomputed or unverified, never two of these, and the three must add up to the total; a row whose sum does not match is reported as a counting error, not corrected. Expected overflow cells are four widths at rest plus four per overlay. Both feed criterion 3.
+Contrast buckets are disjoint (`judge.md` section 3): a pair is ledger-only, recomputed or unverified, never two of these, and the three must add up to the total; a row whose sum does not match is reported as a counting error, not corrected. Each pair's use and applicable requirement (from `ui-styles` `SKILL.md` section 4 or the ledger row's Needs column) is in `mechanical/<id>.md`. Decorative-only pairs are counted in the total and never as below. Expected overflow cells are four widths at rest plus four per overlay. Both feed criterion 3.
 
 Rubric exceptions applied, each with its evidence record of a type the recorded rubric version accepts (`mechanical/<id>.md`): <list | none>. Retained tells, each with its user constraint record: <list | none>. Rubric rows unassessable (brief, content pack or delivery-note records missing from the handoff): <rows | none>. An output with unassessable rows cannot meet criterion 2.
 
@@ -84,7 +84,7 @@ Criterion 3 per brief and builder, by the rules in `judge.md` section 4, combini
 - Assessed in B, Not assessed in C: <none | rows ...: not met>
 - N/A transitions: <none | rows ... evidenced | rows ... unevidenced: not met>
 - Overflow cells (section 7): <all expected cells measured at 0 | cells ... overflow: not met | cells ... missing: inconclusive>
-- Contrast pairs (section 5): <all verified, none below threshold | pairs ... below: not met | pairs ... unverified: inconclusive>
+- Contrast pairs (section 5): <all verified, no non-decorative pair below its requirement | pairs ... below: not met | pairs ... unverified: inconclusive>
 - Result: <met | not met | inconclusive>
 
 ## 7. Coverage matrix
@@ -111,5 +111,5 @@ List every build, vote, count, audit or cell that is missing, with its reason. "
 ## 10. Reading the criteria
 - Criterion 1 (pair-majority win rate): <met | not met | inconclusive>, from section 4.
 - Criterion 2 (mechanical tells): <met | not met | not applicable>, from section 5.
-- Criterion 3 (usability non-regression): <met | not met | inconclusive>, from the per-brief results in section 6, which read the law rows (Pass and Warning regressions, assessed-to-Not-assessed, unevidenced N/A transitions, task-critical Fails), the three tasks, section 7 (every expected sweep cell measured with `overflowX` 0) and section 5 (every contrast pair verified). Any unknown task, missing cell or unverified pair: inconclusive. Any regression, overflow or failing pair: not met.
+- Criterion 3 (usability non-regression): <met | not met | inconclusive>, from the per-brief results in section 6, which read the law rows (Pass and Warning regressions, assessed-to-Not-assessed, unevidenced N/A transitions, task-critical Fails), the three tasks, section 7 (every expected sweep cell measured with `overflowX` 0) and section 5 (every contrast pair verified). Any unknown task, missing cell or unverified pair: inconclusive. Any regression, overflow or non-decorative pair below its requirement: not met.
 - Human calibration: <n of 5 agree | not run>.

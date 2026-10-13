@@ -83,9 +83,9 @@ Outputs live **outside the checkout** so that nothing from a build is ever commi
 ## 6. Serving an output
 One output at a time, on one fixed port:
 ```bash
-python -m http.server 4181 --directory "<root>/outputs/<id>"
+python -m http.server 4181 --bind 127.0.0.1 --directory "<root>/outputs/<id>"
 ```
-This is a static file server that does not proxy, forward, or rewrite. No dev server, no proxy configuration, no other port. The page is opened only as `http://localhost:4181/`: that exact origin is the only allowlist entry, the only URL any tool opens and the origin the override line names. `http://127.0.0.1:4181` is a different origin to a browser and is never used. (The suite's eval 7 uses 4180; the benchmark uses 4181 so the two never collide.) The server is stopped before the next output is served, and restarted whenever section 9 asks for a reset. An output that cannot be served this way (for example one that needs a build step despite the brief) is recorded as failed under section 2.
+This is a static file server that does not proxy, forward, or rewrite. No dev server, no proxy configuration, no other port. `--bind 127.0.0.1` is required on every start, including every restart in section 9: without it Python listens on all interfaces and exposes the output folder, BUILD.md and any real-project content to the local network. The browser's origin allowlist restricts only what the page requests; it does not protect the server. The page is opened only as `http://localhost:4181/`: that exact origin is the only allowlist entry, the only URL any tool opens and the origin the override line names. `http://127.0.0.1:4181` is a different origin to a browser and is never opened, although it is the address the server binds. This assumes `localhost` resolves to `127.0.0.1` on the machine; check it once per machine before the first run (for example by opening `http://localhost:4181/` while the server is bound to `127.0.0.1` only), and record the result in `isolation/browser.md`. If `localhost` resolves to `::1` first and the page does not load, bind and record the IPv6 loopback instead, never all interfaces. (The suite's eval 7 uses 4180; the benchmark uses 4181 so the two never collide.) The server is stopped before the next output is served, and restarted whenever section 9 asks for a reset. An output that cannot be served this way (for example one that needs a build step despite the brief) is recorded as failed under section 2.
 
 ## 7. Evidence per output
 Collected by the auditing provider in **one isolated browser context** (section 8), with request and navigation blocking installed before the page loads, and stored under `runs/<date>-<label>/evidence/<id>/`. No second browser process is launched for any piece of evidence. Every file below is required; a missing one is a coverage gap in the summary, never a guess.
@@ -131,7 +131,7 @@ Every output shares the one origin, so anything a page leaves in the browser cou
 1. Stop the server.
 2. In the page's origin: unregister every service worker, delete every Cache Storage cache, and clear the HTTP cache, local storage, session storage, cookies and IndexedDB. Close the tab.
 3. Confirm the request interception of section 8 is still installed on the context (or reinstall it) before any navigation.
-4. Start the server again on the same port and open `http://localhost:4181/` in a new tab.
+4. Start the server again with the same command, `--bind 127.0.0.1` included, and open `http://localhost:4181/` in a new tab.
 5. Check that the page is at its initial state. State that survives the reset without an explanation the run can verify (for example a cart that is still full, or a confirmation still showing) makes that output's remaining evidence **invalid**: the walk-throughs are marked unavailable with the reason, the output is listed under not run, and the audit does not continue from the surviving state. A page that persists state by design in a way the brief requires is not an explanation; the briefs require none.
 
 `requests.json` (section 7) covers the reset navigation too, so a request that slips out while interception is being reinstalled is seen.
