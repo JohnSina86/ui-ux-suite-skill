@@ -20,6 +20,7 @@ Copy this file to `<date>-<label>/summary.md` and fill every section. Keep a sec
 - Briefs: <list; say "dreammadestudio: not supplied" when it is>
 - Conditions: <A, B | A, B, C>. Condition manifest (`conditions.json`): B = <the three repos and pinned tags>; C = <every repo of the set under test with its tag, including ui-copy from W5 onwards | "none">
 - Rounds: <which builder built which conditions>
+- Builder configuration, frozen per provider (`conditions.json`): Claude Code = <model id, effort, sampling: none exposed>; Codex = <model id, reasoning effort, sampling: none exposed>. Resolved values per output are in `builds/<id>.json`; mismatched pairs are listed in section 4.
 - Kind of run: <baseline | W6 re-measure | smoke test (proves the protocol only; satisfies no criterion)>
 
 ## 2. Isolation
@@ -41,9 +42,9 @@ One row per pair. Votes are `1` or `2` as the judge saw them, with the condition
 Discarded votes and re-runs are listed under the table with the reason (no detail, detail not in render).
 
 ## 4. Decided-pair rates
-| Comparison | Pairs | Complete | Ties | Incomplete | Decided | Won by <X> | Rate | Status |
+| Comparison | Pairs | Complete | Ties | Incomplete (of which configuration mismatch) | Decided | Won by <X> | Rate | Status |
 | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :--- |
-| <C vs A> | 8 | <n> | <n> | <n> | <n> | <n> | <won/decided or n/a> | <conclusive | inconclusive: reason> |
+| <C vs A> | 8 | <n> | <n> | <n (m)> | <n> | <n> | <won/decided or n/a> | <conclusive | inconclusive: reason> |
 | <C vs B> | 8 | ... | ... | ... | ... | ... | ... | ... |
 | <B vs A> (baseline) | 8 | ... | ... | ... | ... | ... | ... | ... |
 
@@ -52,11 +53,11 @@ Gates from the plan: C wins at least 80% of decided pairs against A and at least
 ## 5. Mechanical counts
 Rubric version: <none | version>. Counting unit: <per the rubric | n/a>.
 
-| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (total / ledger / recomputed / below threshold) | Overflow cells (expected / measured / zero / overflow) | Blocked requests | Remote refs |
+| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (total = ledger-only + recomputed + unverified; below threshold) | Overflow cells (expected / measured / zero / overflow) | Blocked requests | Remote refs |
 | :--- | :--- | :-: | :-: | :-: | :--- | :--- | :-: | :-: |
-| <id> | ... | ... | <n | not counted> | ... | <t / a / b / c> | <e / a / b / c> | <n> | <n> |
+| <id> | ... | ... | <n | not counted> | ... | <t = a + b + c; d> | <e / a / b / c> | <n> | <n> |
 
-Unverified contrast pairs are total minus ledger minus recomputed. Expected overflow cells are four widths at rest plus four per overlay. Both feed criterion 3.
+Contrast buckets are disjoint (`judge.md` section 3): a pair is ledger-only, recomputed or unverified, never two of these, and the three must add up to the total; a row whose sum does not match is reported as a counting error, not corrected. Expected overflow cells are four widths at rest plus four per overlay. Both feed criterion 3.
 
 Rubric exceptions applied, each with its brief reference (`mechanical/<id>.md`): <list | none>. Rubric rows unassessable (brief or content pack missing from the handoff): <rows | none>. An output with unassessable rows cannot meet criterion 2.
 
@@ -97,7 +98,7 @@ One table per output. Cells are `measured`, `screenshot only`, `source only` or 
 | Call | Provider, model | Input tokens | Output tokens | Cached | Source |
 | :--- | :--- | :-: | :-: | :-: | :--- |
 | build <id> (<brief>, <cond.>) | ... | ... | ... | ... | `builds/<id>.json` |
-| judge <pair> <perspective> attempt n | ... | ... | ... | ... | `judges/<pair>/...` |
+| judge <pair> <perspective> attempt n | ... | ... | ... | ... | `judges/<pair>/...` (the usability vote records the ux-laws tag pasted) |
 | mechanical <id> | ... | ... | ... | ... | ... |
 | audit <id> | ... | ... | ... | ... | ... |
 | **Total** | | | | | |

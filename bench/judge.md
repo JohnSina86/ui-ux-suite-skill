@@ -21,15 +21,15 @@ Three roles, each with different inputs. Mixing their inputs is the main way a b
 All three are run by the provider that did not build the outputs. A new session or CLI call for every call; nothing is reused between pairs.
 
 ## 2. Preference judge
-**Inputs, and only these:** the screenshots of both outputs (375 and 1440 at rest, each overlay at 375), their task evidence (the three tasks with the end-state screenshot of each, or the note that it could not be completed), and the brief itself: product, audience, the three tasks, the constraints and the content pack, pasted verbatim. The brief is the same for both outputs and names no condition, so it leaks nothing; without it a judge cannot tell whether the supplied copy survived or whether a placeholder was mandated. The two outputs are called **Output 1** and **Output 2**; which condition is 1 is drawn at random per perspective and recorded in the run folder, never in the prompt.
+**Inputs, and only these:** the screenshots of both outputs (375 and 1440 at rest, each overlay at 375), their task evidence (the three tasks with the end-state screenshot of each, or the note that it could not be completed), and the brief itself: product, audience, the three tasks, the constraints and the content pack, pasted verbatim. The brief is the same for both outputs and names no condition, so it leaks nothing; without it a judge cannot tell whether the supplied copy survived or whether a placeholder was mandated. **The usability reviewer alone also gets the rubric it must apply:** sections 1 to 4 and 6 of the `ux-laws` `SKILL.md` at the tag the run's condition manifest pins for B, pasted verbatim into its prompt as condition-neutral material, with the tag recorded in the vote file. A judge session loads no skill (section 6), so without this text a fresh judge would have to recall or invent the rules. The rubric text names no condition and nothing about either output. The two outputs are called **Output 1** and **Output 2**; which condition is 1 is drawn at random per perspective and recorded in the run folder, never in the prompt.
 
 **Never given:** source, probe JSON, the overflow sweep, the contrast ledger, file names that carry the condition, the build prompt, BUILD.md or any builder finding, the condition's skill list, or any other judge's vote. Style role names, theme classes and spacing token names identify the condition, which is why source is excluded even in part.
 
-**The echo rule.** Every vote must name **one concrete visual detail** from the renders before it picks: a colour, a word that appears on screen, a position, a size relation. A vote with no detail, or whose detail cannot be found in either render, is **discarded**, and that perspective is re-run once with a fresh call. If the re-run also fails, the perspective is missing and the pair is incomplete (section 5).
+**The echo rule.** Every vote must name **one verified visual observation from each output** before it picks: something that cannot be derived from the brief or the task notes, such as a spatial relationship (what sits above, beside or inside what), a colour, a size relation, or a styling difference between the two outputs. A word the brief supplies never counts on its own: the prompt contains the content pack, so quoting the product name or a headline proves nothing about the images. A vote is **discarded** when either observation is missing, is derivable from the brief alone, or cannot be found in that output's renders; that perspective is then re-run once with a fresh call. If the re-run also fails, the perspective is missing and the pair is incomplete (section 5).
 
 **Output format**, the last lines of the reply, one JSON object:
 ```json
-{"detail": "<one visual detail, under 25 words>", "pick": 1, "reason": "<one sentence>"}
+{"detail1": "<one observation in Output 1 the brief cannot supply, under 25 words>", "detail2": "<the same for Output 2>", "pick": 1, "reason": "<one sentence>"}
 ```
 
 ### The four perspectives
@@ -44,7 +44,7 @@ Brief:
 ```
 Closing instruction:
 ```text
-First, name one concrete visual detail you can see in the images (a colour, a word on screen, a position, a size relation) and say which output it is in. Then pick the output you prefer for the question above, in one sentence. End with exactly one JSON line: {"detail": "...", "pick": 1 or 2, "reason": "..."}
+First, name one visual observation from Output 1 and one from Output 2 that the brief could not have told you: a spatial relationship, a colour, a size relation, or a styling difference between the two. Quoting words from the brief does not count. Then pick the output you prefer for the question above, in one sentence. End with exactly one JSON line: {"detail1": "...", "detail2": "...", "pick": 1 or 2, "reason": "..."}
 ```
 
 **Art director.** Middle:
@@ -64,7 +64,10 @@ Question: which output's words are more specific to this product and audience? C
 
 **Usability reviewer.** Middle:
 ```text
-Question: which output is more usable, judged as far as a render can show? Apply the ux-laws rubric where a screenshot gives evidence (choice load, target size and placement, familiar patterns, grouping, feedback shown after a task, the end of each task). Make no WCAG claim and grade nothing a screenshot cannot show. Prefer the page with fewer visible usability problems across the three tasks.
+Question: which output is more usable, judged as far as a render can show? Apply the ux-laws rubric pasted below where a screenshot gives evidence (choice load, target size and placement, familiar patterns, grouping, feedback shown after a task, the end of each task). Make no WCAG claim and grade nothing a screenshot cannot show. Prefer the page with fewer visible usability problems across the three tasks.
+
+ux-laws rubric, verbatim:
+[sections 1 to 4 and 6 of ux-laws SKILL.md at the tag the run records]
 ```
 
 ## 3. Mechanical reviewer
@@ -73,7 +76,7 @@ Not blinded. Gets, per output: the delivered source, `probe-*.json`, `sweep.json
 | Count | Rule |
 | :--- | :--- |
 | Tells, by severity | the frozen W1 rubric from `ui-styles`, by its version, under its counting unit (pattern tells once per page, element tells once per occurrence). Every applicability exception the reviewer applies is recorded with its **brief reference**: the brief file and the line or content-pack item that mandates or supplies the element (for example `cafe-ordering.md, Image descriptions: item images`). An exception with no brief reference is not applied and the tell is counted. When the brief or its content pack is missing from the handoff, every rubric row that carries an applicability exception is marked **unassessable** and listed by row, not counted as zero. Before the rubric exists: `rubric: none; tells: not counted` |
-| Contrast pairs | every text and control colour pair in the delivered CSS: how many are in the ledger, how many were recomputed, and how many fall below the thresholds in `ui-styles` `references/contrast-check.md`. A recomputed pair shows both luminances, as `SKILL.md` section 4 requires; a ratio without them is not counted as verified |
+| Contrast pairs | first list every **unique** pair in the delivered CSS, keyed by foreground colour, background colour, surface and state (rest, hover, focus, active, disabled, selected); the same colours on another surface or state are another pair. Then sort each pair into exactly one bucket: **ledger-only** (in the ledger, not recomputed), **recomputed** (recomputed with both luminances shown, as `SKILL.md` section 4 requires, whether or not it is also in the ledger), or **unverified** (neither). Ledger-only plus recomputed plus unverified must equal the total, and the sheet shows that sum. Verified is ledger-only plus recomputed. Among verified pairs, count those below the thresholds in `ui-styles` `references/contrast-check.md`. A ratio without luminances is unverified |
 | Overflow cells | from `sweep.json`: cells measured, cells with `overflowX: 0`, cells with overflow (listed by width and state) |
 | Blocked requests | from `requests.json`: how many, to which origins |
 | Remote references | from `remote-refs.txt`: how many, which files |
@@ -107,6 +110,7 @@ The percentage score is reported and does not control.
 
 ## 5. Pair results
 - A pair has four perspective votes. **Majority** is 3 or 4 of 4 for one output. **Tie** is 2 to 2.
+- A pair exists only when both outputs were built under the same frozen builder configuration (protocol section 3); otherwise it is **incomplete: configuration mismatch** and no vote is cast.
 - A pair is **complete** only when all four votes are valid under the echo rule. A missing or discarded vote is re-run once for that perspective; if it is still missing, the pair is **incomplete**: excluded from numerator and denominator and reported by count, separately from ties.
 - **Decided pairs** are complete pairs minus ties. The controlling number for criterion 1 is pairs won divided by decided pairs, with the tie and incomplete counts beside it.
 - A comparison (for example C against A) is **inconclusive** when it has zero decided pairs or fewer than six of its eight pairs complete.
@@ -122,7 +126,7 @@ codex exec -m <model> --sandbox read-only --skip-git-repo-check -C "<empty folde
 ```
 Images are attached in a fixed order: all of Output 1, then all of Output 2, each group in the order 375, 1440, overlays, tasks. The prompt lists that order so the judge can tell the outputs apart. The `tokens used` line from stderr is stored with the vote. Image input on `codex exec -i` was verified with CLI 0.154.0.
 
-**Claude Code as judge** (Codex built): a fresh headless call, `claude -p --disable-slash-commands --output-format json`, from an empty folder that contains only the screenshots named by id, with the same prompt and the image file names listed in the same order. The `usage` object from the JSON result is stored with the vote. No skill is loaded in a judge session.
+**Claude Code as judge** (Codex built): a fresh headless call, `claude -p --disable-slash-commands --output-format json`, from an empty folder that contains only the screenshots named by id, with the same prompt and the image file names listed in the same order. The `usage` object from the JSON result is stored with the vote. No skill is loaded in a judge session, for either provider; the usability reviewer's rubric is pasted into its prompt (section 2) from the pinned `ux-laws` checkout, and the vote file records the tag.
 
 Either way: a judge that cannot take images makes the run **invalid for criterion 1**, recorded as such; the run is never downgraded to source-based preference judging. The model id used by each judge call is recorded in the summary.
 

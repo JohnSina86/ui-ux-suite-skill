@@ -41,14 +41,14 @@ No pair. No build ran, so no vote was cast.
 Plumbing check instead of a vote: one headless screenshot of the allowlist test page at 375×812 was sent to Codex with `codex exec -i` and the echo rule. It named "the heading 'Allowlist test page' is dark red near the top", which is in the image (the heading is `#9b2c2c`). Stored as `judges/plumbing/echo-test.md`. This proves image input and the echo rule can be applied; it is not a preference vote.
 
 ## 4. Decided-pair rates
-| Comparison | Pairs | Complete | Ties | Incomplete | Decided | Won by B | Rate | Status |
+| Comparison | Pairs | Complete | Ties | Incomplete (of which configuration mismatch) | Decided | Won by B | Rate | Status |
 | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :--- |
-| B vs A (baseline) | 1 | 0 | 0 | 1 | 0 | 0 | n/a | inconclusive: zero decided pairs |
+| B vs A (baseline) | 1 | 0 | 0 | 1 (0) | 0 | 0 | n/a | inconclusive: zero decided pairs |
 
 ## 5. Mechanical counts
 Rubric version: none. Counting unit: n/a. No output to count.
 
-| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (total / ledger / recomputed / below threshold) | Overflow cells (expected / measured / zero / overflow) | Blocked requests | Remote refs |
+| Output id | Brief | Cond. | High tells | Medium tells | Contrast pairs (total = ledger-only + recomputed + unverified; below threshold) | Overflow cells (expected / measured / zero / overflow) | Blocked requests | Remote refs |
 | :--- | :--- | :-: | :-: | :-: | :--- | :--- | :-: | :-: |
 | none | saas-landing | A, B | not counted | not counted | missing: not built | missing: not built | missing | missing |
 
