@@ -73,6 +73,15 @@ For a project, run the same commands inside `.claude/skills` at the project root
 
 If you already have the three companions, install only the last line.
 
+### Upgrade an existing install
+If a companion is already installed but older than the suite needs, `git clone` fails because the folder exists. Update it in place instead (commit or stash any local edits first):
+```bash
+cd ~/.claude/skills
+git -C ui-styles fetch --tags && git -C ui-styles checkout v1.8.0
+git -C ux-laws fetch --tags && git -C ux-laws checkout v1.3.0
+git -C ui-copy fetch --tags && git -C ui-copy checkout v1.0.0
+```
+
 ## Layout
 ```
 install.sh, install.ps1       one-step install of the three companion skills (for people; the agent never runs them)
