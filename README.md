@@ -85,10 +85,12 @@ references/guided-start.md    plain-language intake, the four levels, next-step 
 references/plain-language.md  the plain-words block and everyday wording
 evals/                        10 functional evals and 26 trigger queries (data only)
 bench/                        the cross-provider blind benchmark: briefs, protocol, judge roles, committed results (start at bench/protocol.md)
+tools/motion-studio/          an optional, separate skill: render motion as code frame by frame, plus a Blender glTF export (not loaded by this skill; see its SKILL.md)
 RELEASING.md                  the release checklist
 ```
 
 ## Changelog
+- **Unreleased**: `tools/motion-studio/`, an optional skill for Codex or Claude that renders animation frame by frame (headless Chromium and ffmpeg, closed-form springs, a contact sheet for self-critique) and exports Blender models to glTF. It is not part of the pipeline and `SKILL.md` does not call it. To use it, copy the folder into your skills folder as `motion-studio`. Tested on one machine: the render loop, partial re-renders and the glTF export. Not tested: audio, loading a `.glb` in Three.js, and whether Codex follows the skill.
 - **v1.4.0**: the benchmark and the companion wiring.
   - **Wiring.** Section 0 checks three companions, and the missing-companion rule covers the new `ui-copy`. The Brief gains a content-pack line and a voice-brief line. The Style decision gains an Imagery line and the type scale. Stage 3 follows the `ui-styles` workflow past the build: the anti-slop gate (result with coverage, the five answers, retained choices and unresolved claims; inconclusive never counts as passing), type and imagery, a `choreography:` line or "none", and a `ui-copy` pass on every string, all recorded in the build manifest. Stage 4 lists remaining tells under unscored findings, never as law rows. Stage 5's gate re-runs `ui-copy` on every string the fixes created or changed, in Polish mode too, and supplied copy is preserved and routed through spec fidelity and owner decisions.
   - The report template gains the anti-slop result and a copy section. Two conflict cases: a retained existing-system choice the rubric would count, and supplied copy that fails the specificity test. The description now also covers a UI that looks generic or AI-made.
