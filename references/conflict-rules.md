@@ -28,6 +28,9 @@ Each case names the situation, the move and why.
 | The audit says a style "looks wrong" for the product | Don't count it as a finding. `ux-laws` grades behaviour and structure, not looks. Offer the product-fit alternative as advice. | Mixing taste into a graded audit makes the score meaningless. |
 | The style's polish may be hiding a weak flow (the Aesthetic-Usability law) | Grade the flow on its own evidence. Don't let a good look raise a score or excuse a Fail. | The law exists to catch exactly this. |
 | The project already has components, and the style's recipes would duplicate them | Map the roles onto the existing selectors, per `ui-styles`. Don't add parallel components. | Rule 2. |
+| A composition move clashes with the style (a decorative accent, such as the Synthwave heading glow, under signal colour) | Keep the move and drop the decorative accent use. If the style can't hold without it, ask the user which matters more. | The style's look is rule 5. Signal colour serves blocking findings (rule 4), but it is not a rule-3 contract, so the user decides a real clash. |
+| The depth-plane back word or subject overlaps a control or body text | Move or shrink the plane. The control stays on top and fully hit-testable. | Rule 3 (target size and focus) outranks the look. |
+| Scale contrast would put reading text under 16px or labels under 12px | Keep the floors and shrink the contrast instead. | Readability isn't traded for the look (rules 3 and 4). |
 | A third-party component or icon brings its own colours | Treat them as new colour pairs and verify them. Keep one icon family. | The resources rules in `ui-styles` apply to anything you add. |
 
 ## What neither skill can tell you

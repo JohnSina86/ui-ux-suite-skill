@@ -4,7 +4,7 @@ description: >-
   Runs a complete UI/UX job in order: brief, style choice, build, UX audit, fixes and one report, using the ui-styles and ux-laws skills. Use when a design must be built and checked, or a UX review followed by fixes, for a screen or a whole site on desktop and mobile. Plain-language mode for non-developers. Not for a single task one of those skills covers alone, WCAG audits or performance profiling.
 license: MIT
 metadata:
-  version: "1.2.0"
+  version: "1.3.0"
 ---
 
 # UI/UX Suite
@@ -49,6 +49,7 @@ Details, handoff blocks and gates are in [pipeline.md](references/pipeline.md). 
 ## 3. Where the two skills meet
 Full rules and worked cases are in [conflict-rules.md](references/conflict-rules.md). The short version:
 - **Precedence, highest first:** the user's explicit instruction, the project's existing design system, contrast, focus and target-size rules, blocking `ux-laws` findings, the style's look, polish. If the user insists on a risky style, build it, apply its `Requires` rule and report the risk. Never weaken a rule silently.
+- **Composition moves** (depth planes, signal colour, scale contrast) live in `ui-styles` `references/composition.md`. Stage 2 picks them and stage 3 builds them. A clash with the style or a contract follows the precedence above.
 - **Where to look:** the `ux-laws` interop table (its section 9) lists the laws each style's risk tends to touch. Use it to decide what to inspect first. It is not a list of automatic findings.
 - **Different jobs:** `ux-laws` grades behaviour and structure, not looks. `ui-styles` checks colour and CSS rules, not usability. Neither one certifies WCAG conformance.
 

@@ -40,13 +40,13 @@ Clone this repo into your skills folder as `ui-ux-suite`, then run the script. I
 mkdir -p ~/.claude/skills && cd ~/.claude/skills
 git clone https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
 ./ui-ux-suite/install.sh                # newest versions (main)
-./ui-ux-suite/install.sh --ref v1.3.0   # or pin both companions to one tag that exists in each
+./ui-ux-suite/install.sh --ref main     # companions now have different tags; pin them with the manual lines
 ```
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null; Set-Location "$HOME\.claude\skills"
 git clone https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
 .\ui-ux-suite\install.ps1               # newest versions (main)
-.\ui-ux-suite\install.ps1 -Ref v1.3.0   # or pin both companions to one tag that exists in each
+.\ui-ux-suite\install.ps1 -Ref main     # companions now have different tags; pin them with the manual lines
 ```
 The scripts are for you, not for the agent: the skill never runs them. They only run `git clone` and `git fetch` against the two companion repos and never delete anything. If a folder named `ui-styles` or `ux-laws` already exists and isn't a git checkout, the script stops and tells you. Read them first if you like: `install.sh` and `install.ps1` are each under 70 lines. For a project instead of your user folder, run the same commands inside `.claude/skills` at the project root. The suite folder keeps its current tag, so `git -C ui-ux-suite checkout <tag>` pins it too.
 
@@ -56,15 +56,15 @@ The same thing without the scripts:
 ### Claude Code (user level)
 ```bash
 mkdir -p ~/.claude/skills && cd ~/.claude/skills
-git clone --branch v1.3.0 https://github.com/JohnSina86/ui-styles-skill.git ui-styles
+git clone --branch v1.4.0 https://github.com/JohnSina86/ui-styles-skill.git ui-styles
 git clone --branch v1.3.0 https://github.com/JohnSina86/ux-laws-skill.git ux-laws
-git clone --branch v1.2.0 https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
+git clone --branch v1.3.0 https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
 ```
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null; Set-Location "$HOME\.claude\skills"
-git clone --branch v1.3.0 https://github.com/JohnSina86/ui-styles-skill.git ui-styles
+git clone --branch v1.4.0 https://github.com/JohnSina86/ui-styles-skill.git ui-styles
 git clone --branch v1.3.0 https://github.com/JohnSina86/ux-laws-skill.git ux-laws
-git clone --branch v1.2.0 https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
+git clone --branch v1.3.0 https://github.com/JohnSina86/ui-ux-suite-skill.git ui-ux-suite
 ```
 For a project, run the same commands inside `.claude/skills` at the project root. The folder names must stay `ui-styles`, `ux-laws` and `ui-ux-suite`, because they match each skill's `name`.
 
@@ -80,11 +80,16 @@ references/report-template.md the combined report, with coverage, spec fidelity 
 references/independent-audit.md the fresh-context audit handoff and prompt
 references/guided-start.md    plain-language intake, the four levels, next-step prompts
 references/plain-language.md  the plain-words block and everyday wording
-evals/                        8 functional evals and 24 trigger queries (data only)
+evals/                        9 functional evals and 24 trigger queries (data only)
 RELEASING.md                  the release checklist
 ```
 
 ## Changelog
+- **v1.3.0**: composition moves.
+  - Stage 2 picks `ui-styles` composition moves (depth planes, signal colour, scale contrast) when the UI feels flat, looks default, or users can't tell what to tap. Signal colour is the default in a new build. Stage 3 builds them, the build manifest records them, and stage 4 lists the laws they touch as places to look, never as findings.
+  - Three conflict cases: a decorative accent under signal colour, a plane overlapping a control, and scale contrast against the reading floors.
+  - Borrowed from Textura's public-domain [`next16-claude-starter`](https://github.com/textura-agency/next16-claude-starter), rewritten framework-free: stage 3 builds loading, empty and error states for data-driven components and lists them in the manifest. Stage 4 measures at rest (after entrances, or with reduced motion emulated), opens overlays at phone width, and repeats in the dark scheme when the project follows it.
+  - **Needs** `ui-styles` ≥ 1.4.0 (it adds `references/composition.md`) and `ux-laws` ≥ 1.3.0. The two now have different tags, so pin them with the manual lines; a single `--ref` tag no longer exists in both.
 - **v1.2.0**: lessons from two live audits of a static marketing site.
   - **Site sweep** scope (coverage plan, templates with their own surface type, a coverage matrix, one audit per template, no site-wide score). **Measure, then grade** with the `ux-laws` page probe.
   - **Independent audit**: `references/independent-audit.md` hands a fresh context the verbatim Brief and specs, never the builder's findings, with the `ux-laws` output contract. A code review never counts.
