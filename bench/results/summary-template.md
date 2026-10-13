@@ -59,7 +59,7 @@ Rubric version: <none | version>. Counting unit: <per the rubric | n/a>.
 
 Contrast buckets are disjoint (`judge.md` section 3): a pair is ledger-only, recomputed or unverified, never two of these, and the three must add up to the total; a row whose sum does not match is reported as a counting error, not corrected. Expected overflow cells are four widths at rest plus four per overlay. Both feed criterion 3.
 
-Rubric exceptions applied, each with its brief reference (`mechanical/<id>.md`): <list | none>. Rubric rows unassessable (brief or content pack missing from the handoff): <rows | none>. An output with unassessable rows cannot meet criterion 2.
+Rubric exceptions applied, each with its evidence record of a type the recorded rubric version accepts (`mechanical/<id>.md`): <list | none>. Retained tells, each with its user constraint record: <list | none>. Rubric rows unassessable (brief, content pack or delivery-note records missing from the handoff): <rows | none>. An output with unassessable rows cannot meet criterion 2.
 
 Criterion 2: C has zero high and at most two medium tells per page. <met | not met | not applicable: no rubric>.
 
