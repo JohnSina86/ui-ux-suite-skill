@@ -22,5 +22,7 @@
   {"query": "Please iron out the kinks in this website for PC and mobile", "should_trigger": true},
   {"query": "Run Lighthouse on my site and tell me the performance score", "should_trigger": false},
   {"query": "Polish the UX of these five pages on desktop and phone and fix what you find", "should_trigger": true},
-  {"query": "Check only the colour contrast of my buttons", "should_trigger": false}
+  {"query": "Check only the colour contrast of my buttons", "should_trigger": false},
+  {"query": "My site looks AI-generated. Fix it so it looks designed, then check the UX", "should_trigger": true},
+  {"query": "Rewrite my landing page headline so it doesn't sound generic", "should_trigger": false}
 ]

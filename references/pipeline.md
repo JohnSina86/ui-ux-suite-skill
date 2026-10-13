@@ -23,6 +23,8 @@ The stage-by-stage procedure. Each stage has an input, the action, an output (a 
 - The 3 tasks a user must complete: [verbs, in order of importance]
 - Existing design system: [none | tokens file path | component library]
 - Stack and constraints: [framework, Tailwind version, CSP or font policy, platform, "no new dependencies"]
+- Content pack: [the real headline, body copy, image descriptions, customers, quotes and figures the user supplied, verbatim or by path; or "none supplied" (then the copy is written from the brief and every fact it needs is marked `[needs a fact]`)]
+- Voice brief (`ui-copy`): [audience, register, three words the brand would never use, one sentence it would say; marked "assumed" if you wrote it]
 - Assumptions made: [list, or "none"]
 ```
 
@@ -34,7 +36,7 @@ In plain-language mode, collect the Brief with the three questions in [guided-st
 ```
 The plan becomes the coverage matrix in the report. Each cell is later marked measured, screenshot only, source only, or not measured with a reason.
 
-**Gate:** every field is filled or marked as an assumption. The surface type matters, because `ux-laws` applies a different set of laws to each type. In a site sweep, each template has its own surface type.
+Sort every supplied string as preserved copy or copy authorised for rewriting, per `ui-copy` section 0; when the request doesn't say which, treat it as preserved. **Gate:** every field is filled or marked as an assumption. The surface type matters, because `ux-laws` applies a different set of laws to each type. In a site sweep, each template has its own surface type.
 
 ## Stage 2: Style
 **Input:** the Brief block.
@@ -49,6 +51,8 @@ The plan becomes the coverage matrix in the report. Each cell is later marked me
 - Existing system handling: [accent layer on <tokens> | new base]
 - Match status: [indexed | no product row, indexed style fits | no verified match, unverified fallback]
 - Composition moves: [depth planes | signal colour | scale contrast | none], each with the symptom it answers, per the `ui-styles` `references/composition.md` table
+- Imagery: [photo | illustration | 3D | typographic | none], with the style's row in `ui-styles` `references/imagery.md` or the reason it departs
+- Type scale: [display, body and meta sizes, the floors and the measure, chosen per `ui-styles` `references/typography.md`]
 ```
 
 Pick composition moves when the brief or the request says the UI feels flat, looks default, or users can't tell what to tap. In a Full or Design build with no existing design system, signal colour is the default. In an existing design system, list the moves as a proposal for the user.
@@ -58,7 +62,13 @@ Pick composition moves when the brief or the request says the UI feels flat, loo
 ## Stage 3: Build
 **Input:** the Style decision block.
 
-**Action:** follow `ui-styles` sections 3 to 7: paste the style's token block, build components from the roles, and apply the guardrails and any composition moves the Style decision names. Read its resources reference only if the user asked for ready-made components, icons, fonts or charts, and follow its rules.
+**Action:** follow `ui-styles` sections 3 to 7, which is its workflow: paste the style's token block, build components from the roles, and apply the guardrails and any composition moves the Style decision names. Then follow its remaining workflow steps and record each result in the manifest:
+- **Anti-slop gate** (`references/anti-slop.md`): run its checks on what you built. Record the gate result (pass, fail or inconclusive) with its assessed coverage, the five "Could this be any site?" answers with their evidence, the retained choices, and any unresolved factual claims. An inconclusive result is never counted as passing; name the missing input.
+- **Type and imagery** (`references/typography.md`, `references/imagery.md`): apply the type scale and the imagery direction the Style decision named.
+- **Choreography** (`references/choreography.md`): if the page has a first-screen reveal, follow it and record a `choreography:` line. Otherwise record `choreography: none`.
+- **Copy** (`ui-copy`): run it on every string you build, including the loading, empty and error states, alt text and the `<title>`. Preserved copy is delivered unchanged, and its violations become proposed changes for the owner, not edits.
+
+Read its resources reference only if the user asked for ready-made components, icons, fonts or charts, and follow its rules.
 
 ```markdown
 ### Build manifest
@@ -68,12 +78,16 @@ Pick composition moves when the brief or the request says the UI feels flat, loo
 - Dependencies added: [none, or name and the user's agreement]. Write "none" only after searching every delivered file, demo pages included, for `http://` and `https://`.
 - Composition moves applied: [moves, and their `composition.md` checks done or left open as "needs a render"; or "none"]
 - States built: [for each component that loads or submits data: loading, empty and error states, each with a next step; or "no data-driven components"]
+- Anti-slop gate: [result: pass | fail | inconclusive, assessed coverage (rows assessed out of the rubric's total), the rubric version, the five answers with one sentence of evidence each, retained choices with their record, unresolved factual claims, or "none"]
+- Type and imagery: [type scale and floors used, spacing steps used, imagery kind]
+- Choreography: [`choreography: <section and timings>` | `choreography: none`]
+- Copy pass (`ui-copy`): [voice brief used, detector counts before and after, strings preserved, proposed changes and needs-a-fact items for the owner, or "Not run: `ui-copy` unavailable"]
 - Rendered and checked in a browser: [yes, with the tool named | no]. Never "yes" for a code or DOM read.
 ```
 
 Every component that loads or submits data gets its loading, empty and error states in this stage, laid out like the final content, because `ux-laws` grades them (law 6 for feedback and progress, law 10 for end and error states) and they are cheap to build now and costly to find later.
 
-**Gate:** the `ui-styles` pre-delivery checklist is done, except for items that need a render (narrow width, 200% zoom, observed focus, reduced motion). If you couldn't render the result, keep those items **open**, list them in the manifest as "Not verified: needs a render", and go on to stage 4 with source code as its evidence. Don't call the whole checklist done.
+**Gate:** the `ui-styles` pre-delivery checklist is done, the gate result and the copy pass are recorded in the manifest, except for items that need a render (narrow width, 200% zoom, observed focus, reduced motion). If you couldn't render the result, keep those items **open**, list them in the manifest as "Not verified: needs a render", and go on to stage 4 with source code as its evidence. Don't call the whole checklist done.
 
 ## Stage 4: Audit
 **Input:** the built result and the Brief block's three tasks.
@@ -82,6 +96,8 @@ Every component that loads or submits data gets its loading, empty and error sta
 - A live page you can open: use it, and use the hit-testing method for any target-size or overlap claim.
 - Source code only: grade what the code shows, and mark every law that needs live behaviour or usage data **Not assessed**, naming the evidence needed.
 - Screenshot or description only: say so, and grade only what that can show.
+
+Anti-slop tells that remain are craft findings, not usability findings: list them under unscored findings, with retained tells marked retained and unresolved claims marked unresolved. Never write a tell as a law row or let it change the score.
 
 Use the `ux-laws` interop table as a starting point for what to inspect, never as a finding. Composition moves add places to look, not findings: signal colour and scale contrast touch law 7 (one distinct primary) and law 13 (only interactive things look interactive); depth planes touch law 2 (overlapped hit areas) and law 12 (structure read through the overlap). A move's absence is never a finding. State plainly if this is a **self-audit** of something you just built.
 
@@ -100,7 +116,7 @@ On a live page, **measure before grading**: run `ux-laws` `references/page-probe
 - Not assessed: [law, evidence needed]
 ```
 
-**Unscored findings** are probe results the `ux-laws` false-positive rules call findings, such as document overflow, but which no law row grades on its own. They stay unscored and never change the score, but they go through stage 5 and the report like rows do.
+**Unscored findings** are probe results the `ux-laws` false-positive rules call findings, such as document overflow, but which no law row grades on its own. They also hold the anti-slop tells and unresolved copy proposals that remain. They stay unscored and never change the score, but they go through stage 5 and the report like rows do.
 
 **Gate:** the `ux-laws` audit-completeness checklist is done (for each template in a sweep), the coverage matrix accounts for every planned cell, and every unscored finding is listed.
 
@@ -119,7 +135,9 @@ On a live page, **measure before grading**: run `ux-laws` `references/page-probe
 
 **Re-audit output is row changes, not a new score.** The report's only headline score is the stage-4 score. A post-fix score may appear only labelled "indicative, edits only", never as a headline. A finding closes only with new evidence, of a kind that can show it, at every occurrence it cited; an occurrence that wasn't checked again stays open.
 
-**Gate:** every Fail and Warning, and every unscored finding, is fixed with re-check evidence or deferred with a reason. If any remain after the one re-audit, they go into the report as open risks. Don't loop again.
+**Copy gate.** Before the fix log closes, run `ui-copy` again on every string the fixes created or changed (error messages, confirmations, control labels, alt text). This applies in Polish mode too, which otherwise never reaches stage 3. Supplied copy is preserved: a proposed change to it goes through the report's spec fidelity and owner decisions sections and is never applied silently. Record the strings checked and the detector count in the fix log.
+
+**Gate:** every Fail and Warning, and every unscored finding, is fixed with re-check evidence or deferred with a reason, and the copy gate is done. If any remain after the one re-audit, they go into the report as open risks. Don't loop again.
 
 ## Stage 6: Report
 Assemble [report-template.md](report-template.md). Keep each section short and link to the files, but include the **full `ux-laws` audit** (all 20 rows, the counts, the conformance notes, per template in a sweep) inside the report so the score can be checked from the document alone.
@@ -129,5 +147,5 @@ Assemble [report-template.md](report-template.md). Keep each section short and l
 ## Short modes
 - **Advise:** stages 1 and 2, then answer with the recommendation, reasons and risk. No CSS or files unless asked.
 - **Design:** stages 1, 2, 3 and 6. Note in the report that no audit was run, and offer one.
-- **Polish:** a short brief, stage 4, stage 5, one re-audit and the report. If the user also asked for a restyle, run stages 2 and 3 for the parts they named after the audit and before the fixes, so the audit comes first. Otherwise don't restyle anything the findings don't touch.
+- **Polish:** a short brief, stage 4, stage 5, one re-audit and the report. If the user also asked for a restyle, run stages 2 and 3 for the parts they named after the audit and before the fixes, so the audit comes first. Otherwise don't restyle anything the findings don't touch. Stage 5's copy gate applies in Polish mode even when stage 3 never ran.
 - **Review only:** not a mode here. A review with no fixes asked for goes to `ux-laws` alone.

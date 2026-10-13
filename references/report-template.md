@@ -24,6 +24,14 @@ One report for the whole job. Keep each section short, link to files, and skip a
 [the Build manifest]
 - **Colour pairs**: [ledger row ids, plus recomputed pairs printed with both luminances]
 - **Rendered in a browser**: [yes | no]
+- **Anti-slop**: [gate result (pass | fail | inconclusive) per page with its assessed coverage and rubric version; the five "Could this be any site?" answers; retained choices with their record; unresolved claims. Inconclusive is never written as a pass. Tells are craft findings and sit under unscored findings in section 4, never as law rows.]
+- **Type, imagery and reveal**: [type scale and floors, imagery kind, the `choreography:` line or "none"]
+
+### Copy (`ui-copy`)
+- **Voice brief**: [the block, marked assumed if the suite wrote it]
+- **Strings checked**: [count and where; detector tells before and after; or "Not run: `ui-copy` unavailable"]
+- **Preserved copy**: [strings kept unchanged, with any unresolved violation listed as a proposal, not as passing]
+- **Needs a fact**: [`[needs a fact: what]` items, or "none"]
 
 ## 4. UX audit
 - **Evidence source**: [live | source code | screenshot | description]
@@ -31,7 +39,7 @@ One report for the whole job. Keep each section short, link to files, and skip a
 - **Self-audit**: [yes | no, independent: route used, per independent-audit.md]
 - **Score line**: [from the ux-laws report, per template in a sweep; never a site-wide score]
 - **Fail and Warning rows**: [law, evidence, page and viewport]
-- **Unscored findings**: [probe results that need action but no law grades, such as horizontal overflow: what, page and viewport; or "none"]
+- **Unscored findings**: [probe results that need action but no law grades, such as horizontal overflow: what, page and viewport; remaining anti-slop tells, marked retained or unresolved; or "none"]
 - **Not assessed**: [law, evidence needed]
 - **Scope note**: Usability heuristics only. This is not a WCAG conformance result.
 
@@ -45,10 +53,11 @@ One report for the whole job. Keep each section short, link to files, and skip a
 
 ## 5. Fixes made
 [the Fix log: row changes and unscored findings, before → after, per occurrence; each fixed with evidence or deferred with a reason]
+- **Copy re-check**: [every string the fixes created or changed, checked with `ui-copy`, with the detector count; also in Polish mode]
 - **Re-audit**: [rows changed, with evidence; any post-fix score labelled "indicative, edits only"]
 
 ## 6. Spec and content fidelity
-[where the UI departs from a source the user supplied (a copy document, a ticket, acceptance criteria): what the source says, what the UI does, the location. "None found", or "no source supplied". Not graded as law rows.]
+[where the UI departs from a source the user supplied (a copy document, a ticket, acceptance criteria, supplied copy): what the source says, what the UI does, the location. Preserved copy that fails a `ui-copy` rule appears here as a proposed change, with the rule it failed. "None found", or "no source supplied". Not graded as law rows.]
 
 ## 7. Decisions for the owner
 [choices the work surfaced but must not make alone (positioning, which action is primary, copy), each with a recommendation and its trade-off. "None" if empty.]
@@ -68,5 +77,7 @@ One report for the whole job. Keep each section short, link to files, and skip a
 - Every unscored finding appears in the audit and in the fix log, as fixed with evidence or deferred with a reason, and none changed the score.
 - In a site sweep, the coverage matrix accounts for every planned cell, and gaps are listed under open risks.
 - Spec deviations sit in section 6 and owner decisions in section 7, not inside law rows, and nothing in section 7 was acted on without the user.
+- The anti-slop result states its coverage, no inconclusive result is written as a pass, and no tell appears as a law row or in the score.
+- The copy section shows the strings checked and the detector counts, and no preserved string was changed.
 - No claim of accessibility or WCAG conformance anywhere in the report.
 - In plain-language mode: the plain block comes first, uses everyday wording, names the level and one next step, and the full report below it is unchanged.
