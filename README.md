@@ -88,6 +88,7 @@ RELEASING.md                  the release checklist
 - **v1.3.0**: composition moves.
   - Stage 2 picks `ui-styles` composition moves (depth planes, signal colour, scale contrast) when the UI feels flat, looks default, or users can't tell what to tap. Signal colour is the default in a new build. Stage 3 builds them, the build manifest records them, and stage 4 lists the laws they touch as places to look, never as findings.
   - Three conflict cases: a decorative accent under signal colour, a plane overlapping a control, and scale contrast against the reading floors.
+  - Borrowed from Textura's public-domain [`next16-claude-starter`](https://github.com/textura-agency/next16-claude-starter), rewritten framework-free: stage 3 builds loading, empty and error states for data-driven components and lists them in the manifest. Stage 4 measures at rest (after entrances, or with reduced motion emulated), opens overlays at phone width, and repeats in the dark scheme when the project follows it.
   - **Needs** `ui-styles` ≥ 1.4.0 (it adds `references/composition.md`) and `ux-laws` ≥ 1.3.0. The two now have different tags, so pin them with the manual lines; a single `--ref` tag no longer exists in both.
 - **v1.2.0**: lessons from two live audits of a static marketing site.
   - **Site sweep** scope (coverage plan, templates with their own surface type, a coverage matrix, one audit per template, no site-wide score). **Measure, then grade** with the `ux-laws` page probe.

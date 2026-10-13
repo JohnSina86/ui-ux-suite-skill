@@ -67,8 +67,11 @@ Pick composition moves when the brief or the request says the UI feels flat, loo
 - Colour pairs used: [ledger row ids, plus any pair you recomputed, with its two luminances and its ratio]
 - Dependencies added: [none, or name and the user's agreement]. Write "none" only after searching every delivered file, demo pages included, for `http://` and `https://`.
 - Composition moves applied: [moves, and their `composition.md` checks done or left open as "needs a render"; or "none"]
+- States built: [for each component that loads or submits data: loading, empty and error states, each with a next step; or "no data-driven components"]
 - Rendered and checked in a browser: [yes, with the tool named | no]. Never "yes" for a code or DOM read.
 ```
+
+Every component that loads or submits data gets its loading, empty and error states in this stage, laid out like the final content, because `ux-laws` grades them (law 6 for feedback and progress, law 10 for end and error states) and they are cheap to build now and costly to find later.
 
 **Gate:** the `ui-styles` pre-delivery checklist is done, except for items that need a render (narrow width, 200% zoom, observed focus, reduced motion). If you couldn't render the result, keep those items **open**, list them in the manifest as "Not verified: needs a render", and go on to stage 4 with source code as its evidence. Don't call the whole checklist done.
 
@@ -82,7 +85,7 @@ Pick composition moves when the brief or the request says the UI feels flat, loo
 
 Use the `ux-laws` interop table as a starting point for what to inspect, never as a finding. Composition moves add places to look, not findings: signal colour and scale contrast touch law 7 (one distinct primary) and law 13 (only interactive things look interactive); depth planes touch law 2 (overlapped hit areas) and law 12 (structure read through the overlap). A move's absence is never a finding. State plainly if this is a **self-audit** of something you just built.
 
-On a live page, **measure before grading**: run `ux-laws` `references/page-probe.md` on every covered page and viewport, and apply its false-positive rules. In a site sweep, classify, combine and close findings per `ux-laws` `references/multi-surface.md`: one 20-row table per template, every Fail or Warning citing its page and viewport, gaps listed, and no site-wide score.
+On a live page, **measure before grading**: run `ux-laws` `references/page-probe.md` on every covered page and viewport, and apply its false-positive rules. **Measure at rest:** wait for loaders and entrance animations to finish, or measure with `prefers-reduced-motion: reduce` emulated, because a reading taken mid-reveal (contrast, overlap, hit areas) describes a frame, not the page. **Measure the states people actually see:** open each overlay (menu, modal, banner) at phone width, and repeat with `prefers-color-scheme: dark` emulated when the project follows the system scheme. Overlay and dark-scheme cells go in the coverage matrix like any other cell. In a site sweep, classify, combine and close findings per `ux-laws` `references/multi-surface.md`: one 20-row table per template, every Fail or Warning citing its page and viewport, gaps listed, and no site-wide score.
 
 **Independence.** If the UI was built or edited in this session, prefer a fresh-context audit: follow [independent-audit.md](independent-audit.md). A code review or inspection is not a UX audit and never passes this gate.
 
